@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capture A Storm Photography</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #99aaf4;
+            background-color: #f8f8f8;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4d3895, #2c5c8b);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #795399, #c58cbe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+ 
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(135deg, #2c3e50bb, #34495ebb);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: right 0.3s ease;
+            z-index: 1000;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 1rem 0;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            width: 80%;
+            text-align: center;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(-5px);
+        }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: -80px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.8), rgba(243, 156, 18, 0.8));
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay h3 {
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .package-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+        }
+
+        .package-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .package-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .package-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #f39c12;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+
+            .nav-menu {
+                width: 100%;
+            }
+        }
+
+        .description-text {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo" onclick="showPage('home')">Capture A Storm</div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="nav-overlay" onclick="closeMenu()"></div>
+    <div class="nav-menu">
+        <a href="#" onclick="showPage('Home')">Home</a>
+        <a href="#" onclick="showPage('Maternity')">Maternity</a>
+        <a href="#" onclick="showPage('Kids')">Children</a>
+        <a href="#" onclick="showPage('Events')">Events</a>
+        <a href="#" onclick="showPage('Portfolio')">Portfolio</a>
+        <a href="#" onclick="showPage('Packages')">Packages</a>
+        <a href="#" onclick="showPage('Contact')">Contact</a>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Capturing Life's Precious Moments</h1>
+                <p>Professional photography that tells your unique story</p>
+                <a href="#" onclick="showPage('contact')" class="cta-button">Book Your Session</a>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <h2>Welcome!</h2>
+                <p class="description-text">
+                    I’m so glad you’re here. I’m a passionate photographer specializing in maternity, kids, and events, capturing life’s most meaningful moments with warmth and authenticity. Whether you’re celebrating a new beginning, a growing family, or a special occasion, I’m here to help you tell your story through beautiful, timeless images.
+                    Looking for something different? I’m always open to new ideas—just reach out!
+                </p>
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://www.dropbox.com/scl/fi/2gwenef8i329l3074krm4/20240114171609_IMG_4200.JPG?rlkey=bhqnet8evnqnv37454nn5mq8w&st=3am2cxhp&raw=1" alt="Featured Work">
+                        <div class="gallery-overlay">
+                            <h3>Maternity</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://www.dropbox.com/scl/fi/qqe34noo2q7ptu5xit2zr/IMG_1111.JPG?rlkey=18brqen099oksmajn2lv8whvh&st=5bquevzg&raw=1" alt="Featured Work">
+                        <div class="gallery-overlay">
+                            <h3>Children's</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Featured Work">
+                        <div class="gallery-overlay">
+                            <h3>Events</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1502780402662-acc01917e1b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Featured Work">
+                        <div class="gallery-overlay">
+                            <h3>Portraits</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MATERNITY PAGE -->
+    <div id="maternity" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Maternity Photography</h1>
+                <p>Celebrating the beautiful journey of motherhood with timeless elegance</p>
+            </div>
+        </div>
+        
+        <section>
+            <div class="container">
+                <p class="description-text">
+                    Pregnancy is one of life's most magical times, and maternity photography captures this incredible journey in all its beauty. 
+                    I specialize in creating elegant, timeless portraits that celebrate the miracle of new life and the glowing beauty of expectant mothers.
+                    Each session is carefully crafted to reflect your unique style and the love you already feel for your little one.
+                </p>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1559751379-3e54a8c6ab79?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 1">
+                        <div class="gallery-overlay">
+                            <h3>Expecting Joy</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 2">
+                        <div class="gallery-overlay">
+                            <h3>Beautiful Beginnings</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 3">
+                        <div class="gallery-overlay">
+                            <h3>Glowing Moments</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1556816723-1ce827b9cfbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 4">
+                        <div class="gallery-overlay">
+                            <h3>Tender Connection</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 5">
+                        <div class="gallery-overlay">
+                            <h3>Natural Grace</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1612198564738-b5e27b8e4b9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 6">
+                        <div class="gallery-overlay">
+                            <h3>Serene Beauty</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CHILDREN PAGE -->
+    <div id="kids" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Children's Photography</h1>
+                <p>Capturing the wonder, innocence, and joy of childhood</p>
+            </div>
+        </div>
+        
+        <section>
+            <div class="container">
+                <p class="description-text">
+                    Children grow up so fast, and their personalities shine brightest when they're being themselves. 
+                    My approach to children's photography is all about creating a fun, relaxed environment where kids can play, 
+                    laugh, and express their unique personalities. The result? Authentic, joyful images that capture the essence of childhood.
+                </p>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 1">
+                        <div class="gallery-overlay">
+                            <h3>Pure Wonder</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 2">
+                        <div class="gallery-overlay">
+                            <h3>Innocent Smiles</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1518715822321-8c06ba4d1ba2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 3">
+                        <div class="gallery-overlay">
+                            <h3>Playful Energy</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1519975032858-55e30a039b24?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 4">
+                        <div class="gallery-overlay">
+                            <h3>Growing Up</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1587133461562-9be820b2b5e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 5">
+                        <div class="gallery-overlay">
+                            <h3>Sibling Love</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1566507925405-a04318ea94f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 6">
+                        <div class="gallery-overlay">
+                            <h3>Adventure Time</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- EVENTS PAGE -->
+    <div id="events" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Event Photography</h1>
+                <p>Documenting your special celebrations with artistry and emotion</p>
+            </div>
+        </div>
+        
+        <section>
+            <div class="container">
+                <p class="description-text">
+                    From intimate weddings to grand celebrations, corporate events to birthday parties, I capture the emotions, 
+                    connections, and unforgettable moments that make your event unique. My documentary-style approach ensures 
+                    that every laugh, tear, and joyful moment is preserved beautifully for years to come.
+                </p>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wedding Photo">
+                        <div class="gallery-overlay">
+                            <h3>Wedding Bliss</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Party Photo">
+                        <div class="gallery-overlay">
+                            <h3>Celebration Time</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Corporate Event">
+                        <div class="gallery-overlay">
+                            <h3>Corporate Gathering</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Birthday Party">
+                        <div class="gallery-overlay">
+                            <h3>Birthday Joy</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Anniversary">
+                        <div class="gallery-overlay">
+                            <h3>Anniversary Love</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Graduation">
+                        <div class="gallery-overlay">
+                            <h3>Graduation Day</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PORTFOLIO PAGE -->
+    <div id="portfolio" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Portfolio</h1>
+                <p>A diverse collection showcasing various photography styles and subjects</p>
+            </div>
+        </div>
+        
+        <section>
+            <div class="container">
+                <p class="description-text">
+                    Beyond my specialized areas, I love exploring different forms of photography. This portfolio showcases 
+                    professional headshots, lifestyle photography, nature scenes, and creative portraits. Each image represents 
+                    my commitment to capturing beauty in all its forms.
+                </p>
+                
+                <div class="gallery-grid">
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1502780402662-acc01917e1b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Portrait">
+                        <div class="gallery-overlay">
+                            <h3>Professional Portraits</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Headshot">
+                        <div class="gallery-overlay">
+                            <h3>Business Headshots</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Lifestyle">
+                        <div class="gallery-overlay">
+                            <h3>Lifestyle Shoots</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Nature">
+                        <div class="gallery-overlay">
+                            <h3>Nature & Landscape</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fashion">
+                        <div class="gallery-overlay">
+                            <h3>Fashion Photography</h3>
+                        </div>
+                    </div>
+                    <div class="gallery-item" onclick="openModal(this)">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creative Portrait">
+                        <div class="gallery-overlay">
+                            <h3>Creative Portraits</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PACKAGES PAGE -->
+    <div id="packages" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Prices & Packages</h1>
+                <p>Professional photography packages tailored to your needs</p>
+            </div>
+        </div>
+        
+        <section>
+            <div class="container">
+                <p class="description-text">
+                    I believe in providing exceptional value with transparent pricing. Each package is designed to give you 
+                    beautiful, professional images that you'll treasure forever. All packages include professional editing, 
+                    and I'm happy to customize options to fit your specific needs.
+                </p>
+                
+                <div class="packages-grid">
+                    <div class="package-card">
+                        <h3>Essential</h3>
+                        <div class="price">£299</div>
+                        <ul class="package-features">
+                            <li>1 hour photo session</li>
+                            <li>15 edited digital images</li>
+                            <li>Online gallery access</li>
+                            <li>Basic retouching included</li>
+                            <li>Personal use license</li>
+                        </ul>
+                        <a href="#" onclick="showPage('contact')" class="cta-button">Choose Essential</a>
+                    </div>
+                    <div class="package-card">
+                        <h3>Premium</h3>
+                        <div class="price">£499</div>
+                        <ul class="package-features">
+                            <li>2 hour photo session</li>
+                            <li>30 edited digital images</li>
+                            <li>Online gallery access</li>
+                            <li>Professional retouching</li>
+                            <li>Print release included</li>
+                            <li>USB drive with images</li>
+                        </ul>
+                        <a href="#" onclick="showPage('contact')" class="cta-button">Choose Premium</a>
+                    </div>
+                    <div class="package-card">
+                        <h3>Deluxe</h3>
+                        <div class="price">£799</div>
+                        <ul class="package-features">
+                            <li>3 hour photo session</li>
+                            <li>50+ edited digital images</li>
+                            <li>Premium online gallery</li>
+                            <li>Professional retouching</li>
+                            <li>Print release included</li>
+                            <li>USB drive + cloud storage</li>
+                            <li>5 premium prints included</li>
+                        </ul>
+                        <a href="#" onclick="showPage('contact')" class="cta-button">Choose Deluxe</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Get In Touch</h1>
+                <p>Ready to capture your special moments? Let's create something beautiful together</p>
+            </div>
+        </div>
+        
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="session-type">Session Type</label>
+                            <select id="session-type" name="session-type">
+                                <option value="">Select a session type</option>
+                                <option value="maternity">Maternity</option>
+                                <option value="children">Children</option>
+                                <option value="events">Events</option>
+                                <option value="portraits">Portraits</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tell me about your vision for the session..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Capture A Storm Photography. All rights reserved.</p>
+            <p>Creating beautiful memories, one shot at a time.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for enlarged images -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="">
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 'home';
+
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            currentPage = pageId;
+            
+            // Close menu if open
+            closeMenu();
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Update URL hash
+            window.location.hash = pageId;
+        }
+
+        // Menu functions
+        function toggleMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const navOverlay = document.querySelector('.nav-overlay');
+            
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const navOverlay = document.querySelector('.nav-overlay');
+            
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            navOverlay.classList.remove('active');
+        }
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Create mailto link
+            const subject = encodeURIComponent(`Photography Inquiry - ${data['session-type'] || 'General'}`);
+            const body = encodeURIComponent(`
+Name: ${data.name}
+Email: ${data.email}
+Phone: ${data.phone || 'Not provided'}
+Session Type: ${data['session-type'] || 'Not specified'}
+
+Message:
+${data.message}
+            `);
+            
+            const mailtoLink = `mailto:elena@example.com?subject=${subject}&body=${body}`;
+            window.location.href = mailtoLink;
+            
+            // Show confirmation
+            alert('Thank you for your inquiry! Your email client will open to send the message.');
+        });
+
+        // Image modal functions
+        function openModal(element) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const img = element.querySelector('img');
+            
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+            modalImg.alt = img.alt;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside the image
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Handle browser back/forward buttons
+        window.addEventListener('hashchange', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showPage(hash);
+            }
+        });
+
+        // Initialize page from URL hash
+        window.addEventListener('load', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showPage(hash);
+            }
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(44, 62, 80, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #2c3e50, #34495e)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all gallery items and cards
+        document.querySelectorAll('.gallery-item, .package-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
