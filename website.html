@@ -26,7 +26,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, #4d3895, #2c5c8b);
+            background: linear-gradient(135deg,#2c3e50, #34495e);
             color: white;
             padding: 1rem 0;
             position: fixed;
@@ -40,12 +40,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            min-width: 100%;
         }
 
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
-            background: linear-gradient(45deg, #795399, #c58cbe);
+            background: linear-gradient(45deg, #cbc2ed, #adbce1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -149,7 +150,7 @@
         .hero {
             height: 100vh;
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                        url('https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+                        url('https://www.dropbox.com/scl/fi/tzvwr5ig2v3ecrcjuj80p/IMG_1483.JPG?rlkey=7wj5ryfck2duo41sq21sw47oo&st=pwqosuws&raw=1') no-repeat center center;
             background-size: cover;
             background-position: center;
             display: flex;
@@ -492,7 +493,8 @@
 <body>
     <header>
         <nav class="container">
-            <div class="logo" onclick="showPage('home')">Capture A Storm</div>
+            <!-- <div class="logo" onclick="showPage('home')">Capture A Storm</div> -->
+            <img src="https://www.dropbox.com/scl/fi/3ajvk35m9zs3nunocioma/FF9118F1-7D0C-4186-8DBC-587B1364310B.png?rlkey=kyb16dbk8yhj1ikxwx1gh9xyd&st=4avmsaxu&raw=1" alt="Logo" class="logo" onclick="showPage('home')" height="75">
             <div class="hamburger" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
@@ -543,15 +545,9 @@
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Featured Work">
+                        <img src="https://www.dropbox.com/scl/fi/nuzkllnz5csb6d3gmkv21/IMG_1124.JPG?rlkey=pdve5q4b0o9ghczroq31xoueh&st=ya54kh1q&raw=1" alt="Featured Work">
                         <div class="gallery-overlay">
                             <h3>Events</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1502780402662-acc01917e1b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Featured Work">
-                        <div class="gallery-overlay">
-                            <h3>Portraits</h3>
                         </div>
                     </div>
                 </div>
