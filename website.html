@@ -51,6 +51,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             cursor: pointer;
+            filter: invert();
         }
 
         .hamburger {
@@ -150,7 +151,7 @@
         .hero {
             height: 100vh;
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
-                        url('https://www.dropbox.com/scl/fi/tzvwr5ig2v3ecrcjuj80p/IMG_1483.JPG?rlkey=7wj5ryfck2duo41sq21sw47oo&st=pwqosuws&raw=1') no-repeat center center;
+                        url('https://www.dropbox.com/scl/fi/228sve25135t1tsue05vh/IMG_4785-2.jpg?rlkey=00tqfpqnblbongbqrzax44cf1&st=xgvxhz78&raw=1') no-repeat center center;
             background-size: cover;
             background-position: center;
             display: flex;
@@ -245,7 +246,7 @@
         .gallery-item img {
             width: 100%;
             height: 250px;
-            object-fit: cover;
+            object-fit: scale-down;
             transition: transform 0.3s ease;
         }
 
@@ -425,6 +426,7 @@
             width: 100%;
             height: auto;
             border-radius: 10px;
+            object-fit: scale-down;
         }
 
         .close {
@@ -508,14 +510,14 @@
         <a href="#" onclick="showPage('Home')">Home</a>
         <a href="#" onclick="showPage('Maternity')">Maternity</a>
         <a href="#" onclick="showPage('Kids')">Children</a>
-        <a href="#" onclick="showPage('Events')">Events</a>
+        <a href="#" onclick="showPage('Pets')">Pets</a>
         <a href="#" onclick="showPage('Portfolio')">Portfolio</a>
         <a href="#" onclick="showPage('Packages')">Packages</a>
         <a href="#" onclick="showPage('Contact')">Contact</a>
     </div>
 
     <!-- HOME PAGE -->
-    <div id="home" class="page active">
+    <div id="Home" class="page active">
         <section class="hero">
             <div class="hero-content">
                 <h1>Capturing Life's Precious Moments</h1>
@@ -528,7 +530,7 @@
             <div class="container">
                 <h2>Welcome!</h2>
                 <p class="description-text">
-                    I’m so glad you’re here. I’m a passionate photographer specializing in maternity, kids, and events, capturing life’s most meaningful moments with warmth and authenticity. Whether you’re celebrating a new beginning, a growing family, or a special occasion, I’m here to help you tell your story through beautiful, timeless images.
+                    I’m so glad you’re here. I’m a passionate photographer specializing in maternity, kids and pets, capturing life’s most meaningful moments with warmth and authenticity. Whether you’re celebrating a new beginning, a growing family, or a special occasion, I’m here to help you tell your story through beautiful, timeless images.
                     Looking for something different? I’m always open to new ideas—just reach out!
                 </p>
                 <div class="gallery-grid">
@@ -539,15 +541,15 @@
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/qqe34noo2q7ptu5xit2zr/IMG_1111.JPG?rlkey=18brqen099oksmajn2lv8whvh&st=5bquevzg&raw=1" alt="Featured Work">
+                        <img src="https://www.dropbox.com/scl/fi/1qizzthjc2oex104zywpc/IMG_4404-2.jpg?rlkey=fgnihyw2sc8jcwj263ulvd6aq&st=9lpf7owd&raw=1" alt="Featured Work">
                         <div class="gallery-overlay">
                             <h3>Children's</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/nuzkllnz5csb6d3gmkv21/IMG_1124.JPG?rlkey=pdve5q4b0o9ghczroq31xoueh&st=ya54kh1q&raw=1" alt="Featured Work">
+                        <img src="https://www.dropbox.com/scl/fi/3e7i2zr3rc3nvinzq7gsa/IMG_0104-2.jpg?rlkey=mn4c1urmexfjy6p3v9pxyreiv&st=a22kyzp5&raw=1" alt="Featured Work">
                         <div class="gallery-overlay">
-                            <h3>Events</h3>
+                            <h3>Pets</h3>
                         </div>
                     </div>
                 </div>
@@ -556,7 +558,7 @@
     </div>
 
     <!-- MATERNITY PAGE -->
-    <div id="maternity" class="page">
+    <div id="Maternity" class="page">
         <div class="page-header">
             <div class="container">
                 <h1>Maternity Photography</h1>
@@ -574,37 +576,37 @@
                 
                 <div class="gallery-grid">
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1559751379-3e54a8c6ab79?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 1">
+                        <img src="https://www.dropbox.com/scl/fi/jfnchsnd7nah5axauc14o/20240114_215655.jpg?rlkey=tkjy4wpmfs919vd2qe3iibiil&st=97pk6imm&raw=1" alt="Maternity Photo 1">
                         <div class="gallery-overlay">
                             <h3>Expecting Joy</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 2">
+                        <img src="https://www.dropbox.com/scl/fi/uvh2x3lektkp625hftsjs/20240114143318_IMG_3947-1.JPG?rlkey=x53rtisfk8uxdqrd03574m7g5&st=tbxaoukn&raw=1" alt="Maternity Photo 2">
                         <div class="gallery-overlay">
                             <h3>Beautiful Beginnings</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 3">
+                        <img src="https://www.dropbox.com/scl/fi/aqpvhoj1joowdz1vj7h13/20240114150452_IMG_4010.JPG?rlkey=1p6xjoyubd74biczahzrtcrf7&st=b5b505l9&raw=1" alt="Maternity Photo 3">
                         <div class="gallery-overlay">
                             <h3>Glowing Moments</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1556816723-1ce827b9cfbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 4">
+                        <img src="https://www.dropbox.com/scl/fi/e1vnijj3byw15awvg5wly/20240114183210_IMG_4302.JPG?rlkey=iimn8h2i5f4bm7ujq7zmf6mqu&st=0up4z3tj&raw=1" alt="Maternity Photo 4">
                         <div class="gallery-overlay">
                             <h3>Tender Connection</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 5">
+                        <img src="https://www.dropbox.com/scl/fi/5r4egojx537916bsbducz/20240114172311_IMG_4225.JPG?rlkey=jklyw9du07xsd6ac3we9rti38&st=6d1k7xhw&raw=1" alt="Maternity Photo 5">
                         <div class="gallery-overlay">
                             <h3>Natural Grace</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1612198564738-b5e27b8e4b9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Maternity Photo 6">
+                        <img src="https://www.dropbox.com/scl/fi/noares0tegej773r3mpzi/20240114151730_IMG_4033.JPG?rlkey=sedrt306mnl1zmubypkys9jv2&st=840jitgi&raw=1" alt="Maternity Photo 6">
                         <div class="gallery-overlay">
                             <h3>Serene Beauty</h3>
                         </div>
@@ -615,7 +617,7 @@
     </div>
 
     <!-- CHILDREN PAGE -->
-    <div id="kids" class="page">
+    <div id="Kids" class="page">
         <div class="page-header">
             <div class="container">
                 <h1>Children's Photography</h1>
@@ -633,39 +635,33 @@
                 
                 <div class="gallery-grid">
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 1">
+                        <img src="https://www.dropbox.com/scl/fi/amj22sde2wp39u6tq1rns/IMG_4395-2.jpg?rlkey=0sjduni2asaa3gjz4ebgz08nu&st=jcs4cdky&raw=1" alt="Kids Photo 1">
                         <div class="gallery-overlay">
-                            <h3>Pure Wonder</h3>
+                            <h3>Pumpkin Patch</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 2">
+                        <img src="https://www.dropbox.com/scl/fi/ma1ujuo4f6h4bg5w0arzq/IMG_4431-2.jpg?rlkey=gk1o9msxfkx3l4ypmhawin5od&st=1gojfg0s&raw=1" alt="Kids Photo 2">
                         <div class="gallery-overlay">
                             <h3>Innocent Smiles</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1518715822321-8c06ba4d1ba2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 3">
+                        <img src="https://www.dropbox.com/scl/fi/vw7vgq4sodrrpc5y23z09/IMG_4648-2.jpg?rlkey=kekal6v1u2jry053tn6cpfuq7&st=xju8q0qk&raw=1" alt="Kids Photo 3">
                         <div class="gallery-overlay">
                             <h3>Playful Energy</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1519975032858-55e30a039b24?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 4">
+                        <img src="https://www.dropbox.com/scl/fi/tj1oj9bblewyxcpjvv73s/IMG_4550-2.jpg?rlkey=g65qn82hjc6cz4f00uo59f3bl&st=kn51som3&raw=1" alt="Kids Photo 4">
                         <div class="gallery-overlay">
                             <h3>Growing Up</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1587133461562-9be820b2b5e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 5">
+                        <img src="https://www.dropbox.com/scl/fi/1qizzthjc2oex104zywpc/IMG_4404-2.jpg?rlkey=fgnihyw2sc8jcwj263ulvd6aq&st=xten6jyp&raw=1" alt="Kids Photo 5">
                         <div class="gallery-overlay">
-                            <h3>Sibling Love</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1566507925405-a04318ea94f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Photo 6">
-                        <div class="gallery-overlay">
-                            <h3>Adventure Time</h3>
+                            <h3>Flying High</h3>
                         </div>
                     </div>
                 </div>
@@ -673,58 +669,56 @@
         </section>
     </div>
 
-    <!-- EVENTS PAGE -->
-    <div id="events" class="page">
+    <!-- PETS PAGE -->
+    <div id="Pets" class="page">
         <div class="page-header">
             <div class="container">
-                <h1>Event Photography</h1>
-                <p>Documenting your special celebrations with artistry and emotion</p>
+                <h1>Pet Photography</h1>
+                <p>Turning wagging tails and wet noses into timeless memories.</p>
             </div>
         </div>
         
         <section>
             <div class="container">
                 <p class="description-text">
-                    From intimate weddings to grand celebrations, corporate events to birthday parties, I capture the emotions, 
-                    connections, and unforgettable moments that make your event unique. My documentary-style approach ensures 
-                    that every laugh, tear, and joyful moment is preserved beautifully for years to come.
+                    We believe pets are more than animals — they’re family. Whether it’s the sparkle in their eyes, the wag of a tail, or that perfectly silly moment only they can pull off, we’re here to freeze those memories in time. With patience, care, and a love for every furry, feathered, or scaly friend, we create images that tell the beautiful story of your pet’s personality.
                 </p>
                 
                 <div class="gallery-grid">
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wedding Photo">
+                        <img src="https://www.dropbox.com/scl/fi/n16jwhrdztxj53r344mbc/IMG_0123-2.jpg?rlkey=3v0h4jno8rshle5qv300frd25&st=kwaqclqa&raw=1" alt="Dog Photo">
                         <div class="gallery-overlay">
-                            <h3>Wedding Bliss</h3>
+                            <h3>Running For Joy</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Party Photo">
+                        <img src="https://www.dropbox.com/scl/fi/n91mrx32id3604cuyb1pb/IMG_0406-2.jpg?rlkey=qkkflq8u13g0i6sg6g1cx3ul3&st=6eevzmht&raw=1" alt="Kitten Photo">
                         <div class="gallery-overlay">
-                            <h3>Celebration Time</h3>
+                            <h3>Kitten Eyes</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Corporate Event">
+                        <img src="https://www.dropbox.com/scl/fi/sri9xagrmyysq4y8304c5/IMG_0829-2.jpg?rlkey=fu3zhod1k5ou34ucu2jt0a422&st=jojk26qf&raw=1" alt="Moody Dog">
                         <div class="gallery-overlay">
-                            <h3>Corporate Gathering</h3>
+                            <h3>Moody Scenes</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Birthday Party">
+                        <img src="https://www.dropbox.com/scl/fi/kp85chkol38d9n6cqhskg/IMG_0894-2.jpg?rlkey=ek2nm3stbj94dxl1g0c1hc14v&st=9syjx15u&raw=1" alt="Stand To Attention">
                         <div class="gallery-overlay">
-                            <h3>Birthday Joy</h3>
+                            <h3>Stand To Attention</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Anniversary">
+                        <img src="https://www.dropbox.com/scl/fi/swl2j83c93ppzp3z91r60/IMG_4467-2.jpg?rlkey=ln7x3x3vmr9uy3abln8j4i011&st=e8defcvc&raw=1" alt="Christmas Cat">
                         <div class="gallery-overlay">
-                            <h3>Anniversary Love</h3>
+                            <h3>Christmas Cat</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Graduation">
+                        <img src="https://www.dropbox.com/scl/fi/228sve25135t1tsue05vh/IMG_4785-2.jpg?rlkey=00tqfpqnblbongbqrzax44cf1&st=0i0pg19s&raw=1" alt="Piercing Eyes">
                         <div class="gallery-overlay">
-                            <h3>Graduation Day</h3>
+                            <h3>Piercing Eyes</h3>
                         </div>
                     </div>
                 </div>
@@ -733,7 +727,7 @@
     </div>
 
     <!-- PORTFOLIO PAGE -->
-    <div id="portfolio" class="page">
+    <div id="Portfolio" class="page">
         <div class="page-header">
             <div class="container">
                 <h1>Portfolio</h1>
@@ -751,39 +745,39 @@
                 
                 <div class="gallery-grid">
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1502780402662-acc01917e1b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Portrait">
+                        <img src="https://www.dropbox.com/scl/fi/wuvcw6swdym4i5vmhoegf/IMG_3046-2.jpg?rlkey=fnhmiw5066uo4mn0dciagporn&st=x5k0atbs&raw=1" alt="Landmarks">
                         <div class="gallery-overlay">
-                            <h3>Professional Portraits</h3>
+                            <h3>Landmarks</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Headshot">
+                        <img src="https://www.dropbox.com/scl/fi/n2gxmh3soqv02qd9bbzf6/IMG_3473-2.jpg?rlkey=ylv9f6u9fgvzv8n0vo38j59z7&st=ag26gb1k&raw=1" alt="Local Fairs">
                         <div class="gallery-overlay">
-                            <h3>Business Headshots</h3>
+                            <h3>Local Fairs</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Lifestyle">
+                        <img src="https://www.dropbox.com/scl/fi/q8du16tkppjuoefst3m8w/IMG_0696-2.jpg?rlkey=qi3nbdcn91vfj8hpenu89s2u5&st=yz669lsh&raw=1" alt="Product">
                         <div class="gallery-overlay">
-                            <h3>Lifestyle Shoots</h3>
+                            <h3>Product</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Nature">
+                        <img src="https://www.dropbox.com/scl/fi/nji31mnmj64uq7qe5bcnw/IMG_0345-2.jpg?rlkey=dts763539ky3u9phgw95mi3g6&st=v7rh58wz&raw=1" alt="Manor Houses">
                         <div class="gallery-overlay">
-                            <h3>Nature & Landscape</h3>
+                            <h3>Manor Houses</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fashion">
+                        <img src="https://www.dropbox.com/scl/fi/zh7fbk44b6vxd1yxxz7kp/IMG_0230-2.jpg?rlkey=7dupe837f92ri7hl6cyzmcjkv&st=4t8aug3a&raw=1" alt="Religious Buildings">
                         <div class="gallery-overlay">
-                            <h3>Fashion Photography</h3>
+                            <h3>Religious Buildings</h3>
                         </div>
                     </div>
                     <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creative Portrait">
+                        <img src="https://www.dropbox.com/scl/fi/dtnkzxc5m8q9fi13jqltz/IMG_1746-2.jpg?rlkey=h8i25ox77j06g02oojfedvzlv&st=k1pew1ol&raw=1" alt="Winter">
                         <div class="gallery-overlay">
-                            <h3>Creative Portraits</h3>
+                            <h3>Winter</h3>
                         </div>
                     </div>
                 </div>
@@ -792,7 +786,7 @@
     </div>
 
     <!-- PACKAGES PAGE -->
-    <div id="packages" class="page">
+    <div id="Packages" class="page">
         <div class="page-header">
             <div class="container">
                 <h1>Prices & Packages</h1>
@@ -854,7 +848,7 @@
     </div>
 
     <!-- CONTACT PAGE -->
-    <div id="contact" class="page">
+    <div id="Contact" class="page">
         <div class="page-header">
             <div class="container">
                 <h1>Get In Touch</h1>
@@ -884,7 +878,7 @@
                                 <option value="">Select a session type</option>
                                 <option value="maternity">Maternity</option>
                                 <option value="children">Children</option>
-                                <option value="events">Events</option>
+                                <option value="pets">Pets</option>
                                 <option value="portraits">Portraits</option>
                                 <option value="other">Other</option>
                             </select>
@@ -916,7 +910,7 @@
     </div>
 
     <script>
-        let currentPage = 'home';
+        let currentPage = 'Home';
 
         // Page navigation
         function showPage(pageId) {
@@ -979,7 +973,7 @@ Message:
 ${data.message}
             `);
             
-            const mailtoLink = `mailto:elena@example.com?subject=${subject}&body=${body}`;
+            const mailtoLink = `mailto:captureastorm@gmail.com?subject=${subject}&body=${body}`;
             window.location.href = mailtoLink;
             
             // Show confirmation
