@@ -20,7 +20,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 2400px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -236,6 +236,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             cursor: pointer;
+            align-content: center;
         }
 
         .gallery-item:hover {
@@ -245,7 +246,7 @@
 
         .gallery-item img {
             width: 100%;
-            height: 250px;
+            height: auto;
             object-fit: scale-down;
             transition: transform 0.3s ease;
         }
@@ -331,6 +332,77 @@
         .package-features li {
             padding: 0.5rem 0;
             border-bottom: 1px solid #eee;
+        }
+
+        /* Reviews specific styles */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+        }
+
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: #f39c12;
+        }
+
+        .review-text {
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .reviewer-info {
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 1.5rem;
+        }
+
+        .reviewer-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-session {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .contact-section {
@@ -425,7 +497,7 @@
         .modal img {
             width: 100%;
             height: auto;
-            border-radius: 10px;
+            border-radius: 4px;
             object-fit: scale-down;
         }
 
@@ -513,6 +585,7 @@
         <a href="#" onclick="showPage('Pets')">Pets</a>
         <a href="#" onclick="showPage('Portfolio')">Portfolio</a>
         <a href="#" onclick="showPage('Packages')">Packages</a>
+        <a href="#" onclick="showPage('Reviews')">Reviews</a>
         <a href="#" onclick="showPage('Contact')">Contact</a>
     </div>
 
@@ -522,7 +595,7 @@
             <div class="hero-content">
                 <h1>Capturing Life's Precious Moments</h1>
                 <p>Professional photography that tells your unique story</p>
-                <a href="#" onclick="showPage('contact')" class="cta-button">Book Your Session</a>
+                <a href="#" onclick="showPage('Contact')" class="cta-button">Book Your Session</a>
             </div>
         </section>
 
@@ -575,12 +648,6 @@
                 </p>
                 
                 <div class="gallery-grid">
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/jfnchsnd7nah5axauc14o/20240114_215655.jpg?rlkey=tkjy4wpmfs919vd2qe3iibiil&st=97pk6imm&raw=1" alt="Maternity Photo 1">
-                        <div class="gallery-overlay">
-                            <h3>Expecting Joy</h3>
-                        </div>
-                    </div>
                     <div class="gallery-item" onclick="openModal(this)">
                         <img src="https://www.dropbox.com/scl/fi/uvh2x3lektkp625hftsjs/20240114143318_IMG_3947-1.JPG?rlkey=x53rtisfk8uxdqrd03574m7g5&st=tbxaoukn&raw=1" alt="Maternity Photo 2">
                         <div class="gallery-overlay">
@@ -813,7 +880,7 @@
                             <li>Basic retouching included</li>
                             <li>Personal use license</li>
                         </ul>
-                        <a href="#" onclick="showPage('contact')" class="cta-button">Choose Essential</a>
+                        <a href="#" onclick="showPage('Contact')" class="cta-button">Choose Essential</a>
                     </div>
                     <div class="package-card">
                         <h3>Premium</h3>
@@ -826,7 +893,7 @@
                             <li>Print release included</li>
                             <li>USB drive with images</li>
                         </ul>
-                        <a href="#" onclick="showPage('contact')" class="cta-button">Choose Premium</a>
+                        <a href="#" onclick="showPage('Contact')" class="cta-button">Choose Premium</a>
                     </div>
                     <div class="package-card">
                         <h3>Deluxe</h3>
@@ -840,7 +907,68 @@
                             <li>USB drive + cloud storage</li>
                             <li>5 premium prints included</li>
                         </ul>
-                        <a href="#" onclick="showPage('contact')" class="cta-button">Choose Deluxe</a>
+                        <a href="#" onclick="showPage('Contact')" class="cta-button">Choose Deluxe</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- REVIEWS PAGE -->
+    <div id="Reviews" class="page">
+        <div class="page-header">
+            <div class="container">
+                <h1>Client Reviews</h1>
+                <p>What our amazing clients have to say about their experience</p>
+            </div>
+        </div>
+        
+        <section>
+            <div class="container">
+                <p class="description-text">
+                    Nothing makes me happier than hearing from satisfied clients who love their photos. Here's what some of our 
+                    wonderful families have shared about their photography experience with us. Every session is unique, 
+                    and I'm committed to making yours just as special.
+                </p>
+                
+                <div class="reviews-grid">
+                    <div class="review-card">
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+                        <div class="review-text">
+                            
+                        </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Name</div>
+                            <div class="review-session">Maternity Session</div>
+                        </div>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+                        <div class="review-text">
+                            
+                        </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Name</div>
+                            <div class="review-session">Children's Portrait Session</div>
+                        </div>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+                        <div class="review-text">
+                            
+                        </div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Name</div>
+                            <div class="review-session">Pet Photography Session</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -881,6 +1009,15 @@
                                 <option value="pets">Pets</option>
                                 <option value="portraits">Portraits</option>
                                 <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="package-type">Package</label>
+                            <select id="package-type" name="package-type">
+                                <option value="">Select a package type</option>
+                                <option value="essential">Essential</option>
+                                <option value="premium">Premium</option>
+                                <option value="deluxe">Deluxe</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -968,6 +1105,7 @@ Name: ${data.name}
 Email: ${data.email}
 Phone: ${data.phone || 'Not provided'}
 Session Type: ${data['session-type'] || 'Not specified'}
+Package Type: ${data['package-type'] || 'Not specified'}
 
 Message:
 ${data.message}
