@@ -1,0 +1,95 @@
+name: Update Portfolio
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # runs daily at 6am UTC
+  workflow_dispatch:       # allows manual trigger from GitHub Actions tab
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate portfolio.json from Dropbox
+        env:
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+        run: |
+          python3 - <<'EOF'
+          import os, json, urllib.request, urllib.parse
+
+          refresh_token = os.environ['DROPBOX_REFRESH_TOKEN']
+          app_key       = os.environ['DROPBOX_APP_KEY']
+          app_secret    = os.environ['DROPBOX_APP_SECRET']
+
+          def api(endpoint, body, token):
+              req = urllib.request.Request(
+                  f'https://api.dropboxapi.com/2/{endpoint}',
+                  data=json.dumps(body).encode(),
+                  headers={'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'}
+              )
+              with urllib.request.urlopen(req) as r:
+                  return json.loads(r.read())
+
+          # Get a fresh access token
+          creds = urllib.parse.urlencode({
+              'grant_type': 'refresh_token',
+              'refresh_token': refresh_token,
+          }).encode()
+          import base64
+          auth = base64.b64encode(f'{app_key}:{app_secret}'.encode()).decode()
+          req = urllib.request.Request(
+              'https://api.dropbox.com/oauth2/token',
+              data=creds,
+              headers={'Authorization': f'Basic {auth}'}
+          )
+          with urllib.request.urlopen(req) as r:
+              token = json.loads(r.read())['access_token']
+
+          # List image files in /edited
+          files = [
+              e for e in api('files/list_folder', {'path': '/edited', 'recursive': False}, token)['entries']
+              if e['.tag'] == 'file' and e['name'].lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp'))
+          ]
+
+          # Get or create a permanent shared link for each file
+          urls = []
+          for f in files:
+              try:
+                  # Try to get an existing shared link first
+                  existing = api('sharing/list_shared_links', {'path': f['path_lower'], 'direct_only': True}, token)
+                  if existing.get('links'):
+                      link = existing['links'][0]['url']
+                  else:
+                      raise Exception('no existing link')
+              except:
+                  # Create a new permanent public link
+                  result = api('sharing/create_shared_link_with_settings', {
+                      'path': f['path_lower'],
+                      'settings': {'requested_visibility': 'public'}
+                  }, token)
+                  link = result['url']
+
+              # Convert to direct image URL
+              direct = link.replace('dl=0', 'raw=1')
+              if 'raw=1' not in direct:
+                  direct += ('&' if '?' in direct else '?') + 'raw=1'
+              urls.append(direct)
+
+          with open('portfolio.json', 'w') as fh:
+              json.dump(urls, fh, indent=2)
+
+          print(f'portfolio.json updated with {len(urls)} images')
+          EOF
+
+      - name: Commit if changed
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add portfolio.json
+          git diff --staged --quiet || (git commit -m "Update portfolio images" && git push)

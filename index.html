@@ -873,67 +873,8 @@
                     my commitment to capturing beauty in all its forms.
                 </p>
                 
-                <div class="gallery-grid">
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/c05zctrqayl5p1qbe46f6/expanded.jpg?rlkey=dgospupwoo6gravp1szkst34v&st=eh2p6qrn&raw=1" alt="Little Family">
-                        <div class="gallery-overlay">
-                            <h3>Little Family</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/wv42cfrm2t2v54hf37rga/IMG_5447.jpg?rlkey=7ntd4uubtl7l9xewofp1o4c3j&st=u5jjyxss&raw=1" alt="Apple Picking">
-                        <div class="gallery-overlay">
-                            <h3>Apple Picking</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/aus7so9njfzc0i0yyu613/IMG_5505.jpg?rlkey=1f0i1rftkydnr1jbaliqpxtep&st=1srje1a6&raw=1" alt="Building Blocks">
-                        <div class="gallery-overlay">
-                            <h3>Building Blocks</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/2m1wq1399f4hy5dr1boit/IMG_5562.jpg?rlkey=62ojxyt0ooa0j00vjrxg1w1sb&st=elteix77&raw=1" alt="Blowing Bubbles">
-                        <div class="gallery-overlay">
-                            <h3>Blowing Bubbles</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/wuvcw6swdym4i5vmhoegf/IMG_3046-2.jpg?rlkey=fnhmiw5066uo4mn0dciagporn&st=x5k0atbs&raw=1" alt="Landmarks">
-                        <div class="gallery-overlay">
-                            <h3>Landmarks</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/n2gxmh3soqv02qd9bbzf6/IMG_3473-2.jpg?rlkey=ylv9f6u9fgvzv8n0vo38j59z7&st=ag26gb1k&raw=1" alt="Local Fairs">
-                        <div class="gallery-overlay">
-                            <h3>Local Fairs</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/q8du16tkppjuoefst3m8w/IMG_0696-2.jpg?rlkey=qi3nbdcn91vfj8hpenu89s2u5&st=yz669lsh&raw=1" alt="Product">
-                        <div class="gallery-overlay">
-                            <h3>Product</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/nji31mnmj64uq7qe5bcnw/IMG_0345-2.jpg?rlkey=dts763539ky3u9phgw95mi3g6&st=v7rh58wz&raw=1" alt="Manor Houses">
-                        <div class="gallery-overlay">
-                            <h3>Manor Houses</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/zh7fbk44b6vxd1yxxz7kp/IMG_0230-2.jpg?rlkey=7dupe837f92ri7hl6cyzmcjkv&st=4t8aug3a&raw=1" alt="Religious Buildings">
-                        <div class="gallery-overlay">
-                            <h3>Religious Buildings</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/dtnkzxc5m8q9fi13jqltz/IMG_1746-2.jpg?rlkey=h8i25ox77j06g02oojfedvzlv&st=k1pew1ol&raw=1" alt="Winter">
-                        <div class="gallery-overlay">
-                            <h3>Winter</h3>
-                        </div>
-                    </div>
+                <div class="gallery-grid" id="portfolio-grid">
+                    <p style="text-align:center;padding:2rem;color:#666;grid-column:1/-1;">Loading portfolio...</p>
                 </div>
             </div>
         </section>
@@ -1132,6 +1073,42 @@
     </div>
 
     <script>
+        let portfolioLoaded = false;
+
+        async function loadPortfolioImages() {
+            if (portfolioLoaded) return;
+            const grid = document.getElementById('portfolio-grid');
+
+            try {
+                const res = await fetch('portfolio.json');
+                if (!res.ok) throw new Error('Failed to load portfolio.json');
+                const urls = await res.json();
+
+                if (!urls.length) {
+                    grid.innerHTML = '<p style="text-align:center;padding:2rem;grid-column:1/-1;">No images found.</p>';
+                    return;
+                }
+
+                grid.innerHTML = '';
+                urls.forEach(url => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.onclick = function() { openModal(this); };
+                    item.innerHTML = `<img src="${url}" loading="lazy"><div class="gallery-overlay"></div>`;
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(30px)';
+                    item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(item);
+                    grid.appendChild(item);
+                });
+
+                portfolioLoaded = true;
+            } catch (err) {
+                grid.innerHTML = `<p style="text-align:center;padding:2rem;color:#e74c3c;grid-column:1/-1;">Could not load portfolio images. Please try again later.</p>`;
+                console.error('Portfolio load error:', err);
+            }
+        }
+
         let currentPage = 'Home';
 
         // Page navigation
@@ -1140,19 +1117,22 @@
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            
+
             // Show selected page
             document.getElementById(pageId).classList.add('active');
             currentPage = pageId;
-            
+
             // Close menu if open
             closeMenu();
-            
+
             // Scroll to top
             window.scrollTo(0, 0);
-            
+
             // Update URL hash
             window.location.hash = pageId;
+
+            // Load portfolio images from Dropbox on first visit
+            if (pageId === 'Portfolio') loadPortfolioImages();
         }
 
         // Menu functions
