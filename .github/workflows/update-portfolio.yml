@@ -53,7 +53,7 @@ jobs:
 
           # List image files in /edited
           files = [
-              e for e in api('files/list_folder', {'path': '/edited', 'recursive': False}, token)['entries']
+              e for e in api('files/list_folder', {'path': '/website photos', 'recursive': False}, token)['entries']
               if e['.tag'] == 'file' and e['name'].lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp'))
           ]
 
