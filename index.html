@@ -741,32 +741,40 @@
                     return;
                 }
 
-                // Show skeleton placeholders while images load
+                // Render skeletons upfront — each stores its URL in a data attribute
                 grid.innerHTML = '';
                 const skeletonHeights = [260, 340, 220, 300, 280, 250, 320, 240, 360, 270];
-                urls.forEach((_, i) => {
+                urls.forEach((url, i) => {
                     const skel = document.createElement('div');
                     skel.className = 'skeleton';
                     skel.style.height = skeletonHeights[i % skeletonHeights.length] + 'px';
+                    skel.dataset.src = url;
                     grid.appendChild(skel);
                 });
 
-                // Load each image and replace its skeleton as it arrives
-                urls.forEach((url, i) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const item = document.createElement('div');
-                        item.className = 'gallery-item portfolio-item';
-                        item.onclick = function() { openModal(this); };
-                        item.innerHTML = `<img src="${url}" class="loaded">`;
-                        item.style.opacity = '0';
-                        item.style.transform = 'translateY(30px)';
-                        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                        grid.querySelectorAll('.skeleton')[i]?.replaceWith(item);
-                        observer.observe(item);
-                    };
-                    img.src = url;
-                });
+                // Replace each skeleton with its image only when it scrolls into view
+                const lazyLoader = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return;
+                        const skel = entry.target;
+                        obs.unobserve(skel);
+                        const img = new Image();
+                        img.onload = () => {
+                            const item = document.createElement('div');
+                            item.className = 'gallery-item portfolio-item';
+                            item.onclick = function() { openModal(this); };
+                            item.innerHTML = `<img src="${skel.dataset.src}" class="loaded">`;
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateY(20px)';
+                            item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                            skel.replaceWith(item);
+                            observer.observe(item);
+                        };
+                        img.src = skel.dataset.src;
+                    });
+                }, { rootMargin: '200px' });
+
+                grid.querySelectorAll('.skeleton').forEach(skel => lazyLoader.observe(skel));
 
                 portfolioLoaded = true;
             } catch (err) {
