@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="https://www.dropbox.com/scl/fi/e90m1nolzffxs9mxbkxym/logo-ic.png?rlkey=8gy6dlca3zs81ybvbfeg9owu5&st=slk1qyfk&raw=1"/>
+    <link rel="icon" type="image/png" href="logo-transparent-colour.png"/>
     <title>Capture A Storm Photography</title>
     <style>
         * {
@@ -71,7 +71,7 @@
             transition: 0.3s;
             border-radius: 2px;
         }
- 
+
         .hamburger.active span:nth-child(1) {
             transform: rotate(-45deg) translate(-5px, 6px);
         }
@@ -151,7 +151,7 @@
 
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
                         url('https://www.dropbox.com/scl/fi/228sve25135t1tsue05vh/IMG_4785-2.jpg?rlkey=00tqfpqnblbongbqrzax44cf1&st=xgvxhz78&raw=1') no-repeat center center;
             background-size: cover;
             background-position: center;
@@ -352,7 +352,6 @@
             border-bottom: 1px solid #eee;
         }
 
-        /* Reviews specific styles */
         .reviews-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -554,11 +553,11 @@
             .hero-content h1 {
                 font-size: 2.5rem;
             }
-            
+
             .page-header h1 {
                 font-size: 2rem;
             }
-            
+
             .gallery-grid {
                 grid-template-columns: 1fr;
             }
@@ -566,7 +565,7 @@
             .gallery-grid.masonry {
                 columns: 2;
             }
-            
+
             h2 {
                 font-size: 2rem;
             }
@@ -584,13 +583,47 @@
             line-height: 1.8;
             color: #666;
         }
+
+        /* Portfolio items — no colour overlay, zoom cursor on hover */
+        .portfolio-item {
+            cursor: zoom-in;
+        }
+
+        .portfolio-item:hover {
+            transform: none;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Portfolio skeleton loading */
+        @keyframes shimmer {
+            0%   { background-position: -600px 0; }
+            100% { background-position:  600px 0; }
+        }
+
+        .skeleton {
+            border-radius: 15px;
+            background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
+            background-size: 600px 100%;
+            animation: shimmer 1.4s infinite linear;
+            break-inside: avoid;
+            margin-bottom: 15px;
+        }
+
+        /* Fade in images as they load */
+        .gallery-grid.masonry .gallery-item img {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .gallery-grid.masonry .gallery-item img.loaded {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="container">
-            <!-- <div class="logo" onclick="showPage('home')">Capture A Storm</div> -->
-            <img src="https://www.dropbox.com/scl/fi/3ajvk35m9zs3nunocioma/FF9118F1-7D0C-4186-8DBC-587B1364310B.png?rlkey=kyb16dbk8yhj1ikxwx1gh9xyd&st=4avmsaxu&raw=1" alt="Logo" class="logo" onclick="showPage('home')" height="75">
+            <img src="https://www.dropbox.com/scl/fi/3ajvk35m9zs3nunocioma/FF9118F1-7D0C-4186-8DBC-587B1364310B.png?rlkey=kyb16dbk8yhj1ikxwx1gh9xyd&st=4avmsaxu&raw=1" alt="Logo" class="logo" onclick="showPage('Home')" height="75">
             <div class="hamburger" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
@@ -603,7 +636,7 @@
     <div class="nav-menu">
         <a href="#" onclick="showPage('Home')">Home</a>
         <a href="#" onclick="showPage('Maternity')">Maternity</a>
-        <a href="#" onclick="showPage('Adults')">Adults</a>
+        <a href="#" onclick="showPage('Adults')">Aerial & Sports</a>
         <a href="#" onclick="showPage('Kids')">Children</a>
         <a href="#" onclick="showPage('Pets')">Pets</a>
         <a href="#" onclick="showPage('Portfolio')">Portfolio</a>
@@ -612,471 +645,15 @@
         <a href="#" onclick="showPage('Contact')">Contact</a>
     </div>
 
-    <!-- HOME PAGE -->
-    <div id="Home" class="page active">
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Capturing Life's Precious Moments</h1>
-                <p>Professional photography that tells your unique story</p>
-                <a href="#" onclick="showPage('Contact')" class="cta-button">Book Your Session</a>
-            </div>
-        </section>
-
-        <section>
-            <div class="container">
-                <h2>Welcome!</h2>
-                <p class="description-text">
-                    I’m so glad you’re here. I’m a passionate photographer specializing in maternity, kids and pets, capturing life’s most meaningful moments with warmth and authenticity. Whether you’re celebrating a new beginning, a growing family, or a special occasion, I’m here to help you tell your story through beautiful, timeless images.
-                    Looking for something different? I’m always open to new ideas—just reach out!
-                </p>
-                <div class="gallery-grid">
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/2gwenef8i329l3074krm4/20240114171609_IMG_4200.JPG?rlkey=bhqnet8evnqnv37454nn5mq8w&st=3am2cxhp&raw=1" alt="Featured Work">
-                        <div class="gallery-overlay">
-                            <h3>Maternity</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/hh021dykn0hoi3eid2yfd/IMG_5399.jpg?rlkey=b7pzohvr1h2mvloshhp1ti32a&st=8gfwv2ho&raw=1" alt="Featured Work">
-                        <div class="gallery-overlay">
-                            <h3>Children's</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/3e7i2zr3rc3nvinzq7gsa/IMG_0104-2.jpg?rlkey=mn4c1urmexfjy6p3v9pxyreiv&st=a22kyzp5&raw=1" alt="Featured Work">
-                        <div class="gallery-overlay">
-                            <h3>Pets</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- MATERNITY PAGE -->
-    <div id="Maternity" class="page">
-        <div class="page-header">
-            <div class="container">
-                <h1>Maternity Photography</h1>
-                <p>Celebrating the beautiful journey of motherhood with timeless elegance</p>
-            </div>
-        </div>
-        
-        <section>
-            <div class="container">
-                <p class="description-text">
-                    Pregnancy is one of life's most magical times, and maternity photography captures this incredible journey in all its beauty. 
-                    I specialize in creating elegant, timeless portraits that celebrate the miracle of new life and the glowing beauty of expectant mothers.
-                    Each session is carefully crafted to reflect your unique style and the love you already feel for your little one.
-                </p>
-                
-                <div class="gallery-grid">
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/uvh2x3lektkp625hftsjs/20240114143318_IMG_3947-1.JPG?rlkey=x53rtisfk8uxdqrd03574m7g5&st=tbxaoukn&raw=1" alt="Maternity Photo 2">
-                        <div class="gallery-overlay">
-                            <h3>Beautiful Beginnings</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/aqpvhoj1joowdz1vj7h13/20240114150452_IMG_4010.JPG?rlkey=1p6xjoyubd74biczahzrtcrf7&st=b5b505l9&raw=1" alt="Maternity Photo 3">
-                        <div class="gallery-overlay">
-                            <h3>Glowing Moments</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/e1vnijj3byw15awvg5wly/20240114183210_IMG_4302.JPG?rlkey=iimn8h2i5f4bm7ujq7zmf6mqu&st=0up4z3tj&raw=1" alt="Maternity Photo 4">
-                        <div class="gallery-overlay">
-                            <h3>Tender Connection</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/5r4egojx537916bsbducz/20240114172311_IMG_4225.JPG?rlkey=jklyw9du07xsd6ac3we9rti38&st=6d1k7xhw&raw=1" alt="Maternity Photo 5">
-                        <div class="gallery-overlay">
-                            <h3>Natural Grace</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/noares0tegej773r3mpzi/20240114151730_IMG_4033.JPG?rlkey=sedrt306mnl1zmubypkys9jv2&st=840jitgi&raw=1" alt="Maternity Photo 6">
-                        <div class="gallery-overlay">
-                            <h3>Serene Beauty</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- ADULTS PAGE -->
-    <div id="Adults" class="page">
-        <div class="page-header">
-            <div class="container">
-                <h1>Adults Photography</h1>
-                <p>Capturing the essence and beauty of you and your friends through stunning portraits</p>
-            </div>
-        </div>
-        
-        <section>
-            <div class="container">
-                <p class="description-text">
-                    Adults photography is all about capturing the unique personalities and connections between friends. 
-                    Whether it's a fun group shoot or a more intimate portrait session, I aim to create images that reflect your true selves.
-                </p>
-                
-                <div class="gallery-grid">
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/gvyrvd4wqfk6q7h4gvfmo/IMG_5085.jpg?rlkey=82jzilkq3dapz7pj6nckkw9s1&st=bqlpnfyy&raw=1" alt="Adults Photo 1">
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/7ki32c1ic606dhjcrcxwc/IMG_5869.JPG?rlkey=9cdc3sigmid3pn7mu70unu3hn&st=t1l8swp8&raw=1" alt="Adults Photo 2">
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/yvcvn2mrxpoqpsj7k2hl9/IMG_6097.JPG?rlkey=twbro7e7p7n9x8vo2i5f3f85h&st=tlengw94&raw=1" alt="Adults Photo 3">
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- CHILDREN PAGE -->
-    <div id="Kids" class="page">
-        <div class="page-header">
-            <div class="container">
-                <h1>Children's Photography</h1>
-                <p>Capturing the wonder, innocence, and joy of childhood</p>
-            </div>
-        </div>
-        
-        <section>
-            <div class="container">
-                <p class="description-text">
-                    Children grow up so fast, and their personalities shine brightest when they're being themselves. 
-                    My approach to children's photography is all about creating a fun, relaxed environment where kids can play, 
-                    laugh, and express their unique personalities. The result? Authentic, joyful images that capture the essence of childhood.
-                </p>
-                
-                <div class="gallery-grid">
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/amj22sde2wp39u6tq1rns/IMG_4395-2.jpg?rlkey=0sjduni2asaa3gjz4ebgz08nu&st=jcs4cdky&raw=1" alt="Kids Photo 1">
-                        <div class="gallery-overlay">
-                            <h3>Pumpkin Patch</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/znrhlu6jk59ni91vsd985/IMG_6706.jpg?rlkey=zyj39l4xg2jw9739zf0oog5ex&st=ofv6kmfv&raw=1" alt="Kids Photo 2">
-                        <div class="gallery-overlay">
-                            <h3>Princess</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/ma1ujuo4f6h4bg5w0arzq/IMG_4431-2.jpg?rlkey=gk1o9msxfkx3l4ypmhawin5od&st=1gojfg0s&raw=1" alt="Kids Photo 3">
-                        <div class="gallery-overlay">
-                            <h3>Innocent Smiles</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/qnpcq70zzh748uy03n997/IMG_6736.jpg?rlkey=07pz0ai2jyje4bx0grw621swp&st=lyjlwskx&raw=1" alt="Kids Photo 4">
-                        <div class="gallery-overlay">
-                            <h3>Smash Cake</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/vw7vgq4sodrrpc5y23z09/IMG_4648-2.jpg?rlkey=kekal6v1u2jry053tn6cpfuq7&st=xju8q0qk&raw=1" alt="Kids Photo 5">
-                        <div class="gallery-overlay">
-                            <h3>Playful Energy</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/s81mf5bdfo70rr5wix9fg/IMG_6634.jpg?rlkey=fsyog4etrdk5mvf6vkm87mjfs&st=7fs7v2q1&raw=1" alt="Kids Photo 6">
-                        <div class="gallery-overlay">
-                            <h3>Floating Away</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/tj1oj9bblewyxcpjvv73s/IMG_4550-2.jpg?rlkey=g65qn82hjc6cz4f00uo59f3bl&st=kn51som3&raw=1" alt="Kids Photo 7">
-                        <div class="gallery-overlay">
-                            <h3>Growing Up</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/uzp885b9hz57w6kle2ccy/IMG_6590.jpg?rlkey=gmo86qy1gzmopyssxgr4aavz2&st=1ojel4a5&raw=1" alt="Kids Photo 8">
-                        <div class="gallery-overlay">
-                            <h3>Mirror Image</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/1qizzthjc2oex104zywpc/IMG_4404-2.jpg?rlkey=fgnihyw2sc8jcwj263ulvd6aq&st=xten6jyp&raw=1" alt="Kids Photo 9">
-                        <div class="gallery-overlay">
-                            <h3>Flying High</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/2o9727eqmr0mk7l7ntcuq/IMG_5390.jpg?rlkey=q6mt7p1n9m7861k63bjzs9d0u&st=0qcb2qbz&raw=1" alt="Kids Photo 10">
-                        <div class="gallery-overlay">
-                            <h3>Leading The Way</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- PETS PAGE -->
-    <div id="Pets" class="page">
-        <div class="page-header">
-            <div class="container">
-                <h1>Pet Photography</h1>
-                <p>Turning wagging tails and wet noses into timeless memories.</p>
-            </div>
-        </div>
-        
-        <section>
-            <div class="container">
-                <p class="description-text">
-                    We believe pets are more than animals — they’re family. Whether it’s the sparkle in their eyes, the wag of a tail, or that perfectly silly moment only they can pull off, we’re here to freeze those memories in time. With patience, care, and a love for every furry, feathered, or scaly friend, we create images that tell the beautiful story of your pet’s personality.
-                </p>
-                
-                <div class="gallery-grid">
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/n16jwhrdztxj53r344mbc/IMG_0123-2.jpg?rlkey=3v0h4jno8rshle5qv300frd25&st=kwaqclqa&raw=1" alt="Dog Photo">
-                        <div class="gallery-overlay">
-                            <h3>Running For Joy</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/n91mrx32id3604cuyb1pb/IMG_0406-2.jpg?rlkey=qkkflq8u13g0i6sg6g1cx3ul3&st=6eevzmht&raw=1" alt="Kitten Photo">
-                        <div class="gallery-overlay">
-                            <h3>Kitten Eyes</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/sri9xagrmyysq4y8304c5/IMG_0829-2.jpg?rlkey=fu3zhod1k5ou34ucu2jt0a422&st=jojk26qf&raw=1" alt="Moody Dog">
-                        <div class="gallery-overlay">
-                            <h3>Moody Scenes</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/kp85chkol38d9n6cqhskg/IMG_0894-2.jpg?rlkey=ek2nm3stbj94dxl1g0c1hc14v&st=9syjx15u&raw=1" alt="Stand To Attention">
-                        <div class="gallery-overlay">
-                            <h3>Stand To Attention</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/swl2j83c93ppzp3z91r60/IMG_4467-2.jpg?rlkey=ln7x3x3vmr9uy3abln8j4i011&st=e8defcvc&raw=1" alt="Christmas Cat">
-                        <div class="gallery-overlay">
-                            <h3>Christmas Cat</h3>
-                        </div>
-                    </div>
-                    <div class="gallery-item" onclick="openModal(this)">
-                        <img src="https://www.dropbox.com/scl/fi/228sve25135t1tsue05vh/IMG_4785-2.jpg?rlkey=00tqfpqnblbongbqrzax44cf1&st=0i0pg19s&raw=1" alt="Piercing Eyes">
-                        <div class="gallery-overlay">
-                            <h3>Piercing Eyes</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- PORTFOLIO PAGE -->
-    <div id="Portfolio" class="page">
-        <div class="page-header">
-            <div class="container">
-                <h1>Portfolio</h1>
-                <p>A diverse collection showcasing various photography styles and subjects</p>
-            </div>
-        </div>
-        
-        <section>
-            <div class="container">
-                <p class="description-text">
-                    Beyond my specialized areas, I love exploring different forms of photography. This portfolio showcases 
-                    professional headshots, lifestyle photography, nature scenes, and creative portraits. Each image represents 
-                    my commitment to capturing beauty in all its forms.
-                </p>
-                
-                <div class="gallery-grid masonry" id="portfolio-grid">
-                    <p style="text-align:center;padding:2rem;color:#666;">Loading portfolio...</p>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- PACKAGES PAGE -->
-    <div id="Packages" class="page">
-        <div class="page-header">
-            <div class="container">
-                <h1>Prices & Packages</h1>
-                <p>Professional photography packages tailored to your needs</p>
-            </div>
-        </div>
-        
-        <section>
-            <div class="container">
-                <p class="description-text">
-                    I believe in providing exceptional value with transparent pricing. Each package is designed to give you 
-                    beautiful, professional images that you'll treasure forever. All packages include professional editing, 
-                    and I'm happy to customize options to fit your specific needs.
-                </p>
-                
-                <div class="packages-grid">
-                    <div class="package-card">
-                        <h3>Essential</h3>
-                        <div class="price">£299</div>
-                        <ul class="package-features">
-                            <li>1 hour photo session</li>
-                            <li>15 edited digital images</li>
-                            <li>Online gallery access</li>
-                            <li>Basic retouching included</li>
-                            <li>Personal use license</li>
-                        </ul>
-                        <a href="#" onclick="showPage('Contact')" class="cta-button">Choose Essential</a>
-                    </div>
-                    <div class="package-card">
-                        <h3>Premium</h3>
-                        <div class="price">£499</div>
-                        <ul class="package-features">
-                            <li>2 hour photo session</li>
-                            <li>30 edited digital images</li>
-                            <li>Online gallery access</li>
-                            <li>Professional retouching</li>
-                            <li>USB drive with images</li>
-                        </ul>
-                        <a href="#" onclick="showPage('Contact')" class="cta-button">Choose Premium</a>
-                    </div>
-                    <div class="package-card">
-                        <h3>Deluxe</h3>
-                        <div class="price">£799</div>
-                        <ul class="package-features">
-                            <li>3 hour photo session</li>
-                            <li>50+ edited digital images</li>
-                            <li>Online gallery access</li>
-                            <li>Professional retouching</li>
-                            <li>USB drive with images</li>
-                            <li>5 premium prints included</li>
-                        </ul>
-                        <a href="#" onclick="showPage('Contact')" class="cta-button">Choose Deluxe</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- REVIEWS PAGE -->
-    <div id="Reviews" class="page">
-        <div class="page-header">
-            <div class="container">
-                <h1>Client Reviews</h1>
-                <p>What our amazing clients have to say about their experience</p>
-            </div>
-        </div>
-        
-        <section>
-            <div class="container">
-                <p class="description-text">
-                    Nothing makes me happier than hearing from satisfied clients who love their photos. Here's what some of our 
-                    wonderful families have shared about their photography experience with us. Every session is unique, 
-                    and I'm committed to making yours just as special.
-                </p>
-                
-                <div class="reviews-grid">
-                    <div class="review-card">
-                        <div class="stars">
-                            ★★★★★
-                        </div>
-                        <div class="review-text">
-                            
-                        </div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Name</div>
-                            <div class="review-session">Maternity Session</div>
-                        </div>
-                    </div>
-                    
-                    <div class="review-card">
-                        <div class="stars">
-                            ★★★★★
-                        </div>
-                        <div class="review-text">
-                            
-                        </div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Name</div>
-                            <div class="review-session">Children's Portrait Session</div>
-                        </div>
-                    </div>
-                    
-                    <div class="review-card">
-                        <div class="stars">
-                            ★★★★★
-                        </div>
-                        <div class="review-text">
-                            
-                        </div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">Name</div>
-                            <div class="review-session">Pet Photography Session</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- CONTACT PAGE -->
-    <div id="Contact" class="page">
-        <div class="page-header">
-            <div class="container">
-                <h1>Get In Touch</h1>
-                <p>Ready to capture your special moments? Let's create something beautiful together</p>
-            </div>
-        </div>
-        
-        <section class="contact-section">
-            <div class="container">
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="tel" id="phone" name="phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="session-type">Session Type</label>
-                            <select id="session-type" name="session-type">
-                                <option value="">Select a session type</option>
-                                <option value="maternity">Maternity</option>
-                                <option value="children">Children</option>
-                                <option value="pets">Pets</option>
-                                <option value="portraits">Portraits</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="package-type">Package</label>
-                            <select id="package-type" name="package-type">
-                                <option value="">Select a package type</option>
-                                <option value="essential">Essential</option>
-                                <option value="premium">Premium</option>
-                                <option value="deluxe">Deluxe</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" placeholder="Tell me about your vision for the session..."></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </div>
+    <div id="Home"      class="page active"></div>
+    <div id="Maternity" class="page"></div>
+    <div id="Adults"    class="page"></div>
+    <div id="Kids"      class="page"></div>
+    <div id="Pets"      class="page"></div>
+    <div id="Portfolio" class="page"></div>
+    <div id="Packages"  class="page"></div>
+    <div id="Reviews"   class="page"></div>
+    <div id="Contact"   class="page"></div>
 
     <footer>
         <div class="container">
@@ -1094,162 +671,146 @@
     </div>
 
     <script>
+        let currentPage = 'Home';
         let portfolioLoaded = false;
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        // Load a page's HTML from pages/ and inject it
+        async function loadPage(pageId) {
+            const container = document.getElementById(pageId);
+            const res = await fetch(`pages/${pageId.toLowerCase()}.html`);
+            container.innerHTML = await res.text();
+
+            // Wire up scroll animations for newly added items
+            container.querySelectorAll('.gallery-item, .package-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+
+            // Attach contact form handler once the form exists in the DOM
+            if (pageId === 'Contact') {
+                document.getElementById('contactForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const data = Object.fromEntries(new FormData(this));
+                    const subject = encodeURIComponent(`Photography Inquiry - ${data['session-type'] || 'General'}`);
+                    const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || 'Not provided'}\nSession Type: ${data['session-type'] || 'Not specified'}\nPackage Type: ${data['package-type'] || 'Not specified'}\n\nMessage:\n${data.message}`);
+                    window.location.href = `mailto:captureastorm@gmail.com?subject=${subject}&body=${body}`;
+                    alert('Thank you for your inquiry! Your email client will open to send the message.');
+                });
+            }
+        }
+
+        // Fetch all pages in parallel on load so navigation is instant
+        const pages = ['Home', 'Maternity', 'Adults', 'Kids', 'Pets', 'Portfolio', 'Packages', 'Reviews', 'Contact'];
+        Promise.all(pages.map(loadPage)).then(() => {
+            // After all pages loaded, navigate to hash if present
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) showPage(hash);
+        });
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            currentPage = pageId;
+            closeMenu();
+            window.scrollTo(0, 0);
+            window.location.hash = pageId;
+            if (pageId === 'Portfolio') loadPortfolioImages();
+        }
 
         async function loadPortfolioImages() {
             if (portfolioLoaded) return;
             const grid = document.getElementById('portfolio-grid');
-
             try {
                 const res = await fetch('portfolio.json');
                 if (!res.ok) throw new Error('Failed to load portfolio.json');
                 const urls = await res.json();
 
                 if (!urls.length) {
-                    grid.innerHTML = '<p style="text-align:center;padding:2rem;grid-column:1/-1;">No images found.</p>';
+                    grid.innerHTML = '<p style="text-align:center;padding:2rem;color:#666;">No images found.</p>';
                     return;
                 }
 
+                // Show skeleton placeholders while images load
                 grid.innerHTML = '';
-                urls.forEach(url => {
-                    const item = document.createElement('div');
-                    item.className = 'gallery-item';
-                    item.onclick = function() { openModal(this); };
-                    item.innerHTML = `<img src="${url}" loading="lazy"><div class="gallery-overlay"></div>`;
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateY(30px)';
-                    item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    observer.observe(item);
-                    grid.appendChild(item);
+                const skeletonHeights = [260, 340, 220, 300, 280, 250, 320, 240, 360, 270];
+                urls.forEach((_, i) => {
+                    const skel = document.createElement('div');
+                    skel.className = 'skeleton';
+                    skel.style.height = skeletonHeights[i % skeletonHeights.length] + 'px';
+                    grid.appendChild(skel);
+                });
+
+                // Load each image and replace its skeleton as it arrives
+                urls.forEach((url, i) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const item = document.createElement('div');
+                        item.className = 'gallery-item portfolio-item';
+                        item.onclick = function() { openModal(this); };
+                        item.innerHTML = `<img src="${url}" class="loaded">`;
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(30px)';
+                        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                        grid.querySelectorAll('.skeleton')[i]?.replaceWith(item);
+                        observer.observe(item);
+                    };
+                    img.src = url;
                 });
 
                 portfolioLoaded = true;
             } catch (err) {
-                grid.innerHTML = `<p style="text-align:center;padding:2rem;color:#e74c3c;grid-column:1/-1;">Could not load portfolio images. Please try again later.</p>`;
+                grid.innerHTML = `<p style="text-align:center;padding:2rem;color:#e74c3c;">Could not load portfolio images. Please try again later.</p>`;
                 console.error('Portfolio load error:', err);
             }
         }
 
-        let currentPage = 'Home';
-
-        // Page navigation
-        function showPage(pageId) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            currentPage = pageId;
-
-            // Close menu if open
-            closeMenu();
-
-            // Scroll to top
-            window.scrollTo(0, 0);
-
-            // Update URL hash
-            window.location.hash = pageId;
-
-            // Load portfolio images from Dropbox on first visit
-            if (pageId === 'Portfolio') loadPortfolioImages();
-        }
-
-        // Menu functions
         function toggleMenu() {
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            const navOverlay = document.querySelector('.nav-overlay');
-            
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            navOverlay.classList.toggle('active');
+            document.querySelector('.hamburger').classList.toggle('active');
+            document.querySelector('.nav-menu').classList.toggle('active');
+            document.querySelector('.nav-overlay').classList.toggle('active');
         }
 
         function closeMenu() {
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            const navOverlay = document.querySelector('.nav-overlay');
-            
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-            navOverlay.classList.remove('active');
+            document.querySelector('.hamburger').classList.remove('active');
+            document.querySelector('.nav-menu').classList.remove('active');
+            document.querySelector('.nav-overlay').classList.remove('active');
         }
 
-        // Contact form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Create mailto link
-            const subject = encodeURIComponent(`Photography Inquiry - ${data['session-type'] || 'General'}`);
-            const body = encodeURIComponent(`
-Name: ${data.name}
-Email: ${data.email}
-Phone: ${data.phone || 'Not provided'}
-Session Type: ${data['session-type'] || 'Not specified'}
-Package Type: ${data['package-type'] || 'Not specified'}
-
-Message:
-${data.message}
-            `);
-            
-            const mailtoLink = `mailto:captureastorm@gmail.com?subject=${subject}&body=${body}`;
-            window.location.href = mailtoLink;
-            
-            // Show confirmation
-            alert('Thank you for your inquiry! Your email client will open to send the message.');
-        });
-
-        // Image modal functions
         function openModal(element) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
             const img = element.querySelector('img');
-            
-            modal.style.display = 'block';
-            modalImg.src = img.src;
-            modalImg.alt = img.alt;
+            document.getElementById('modalImage').src = img.src;
+            document.getElementById('modalImage').alt = img.alt;
+            document.getElementById('imageModal').style.display = 'block';
         }
 
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
         }
 
-        // Close modal when clicking outside the image
         document.getElementById('imageModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+            if (e.target === this) closeModal();
         });
 
-        // Close modal with Escape key
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
+            if (e.key === 'Escape') closeModal();
         });
 
-        // Handle browser back/forward buttons
         window.addEventListener('hashchange', function() {
             const hash = window.location.hash.substring(1);
-            if (hash && document.getElementById(hash)) {
-                showPage(hash);
-            }
+            if (hash && document.getElementById(hash)) showPage(hash);
         });
 
-        // Initialize page from URL hash
-        window.addEventListener('load', function() {
-            const hash = window.location.hash.substring(1);
-            if (hash && document.getElementById(hash)) {
-                showPage(hash);
-            }
-        });
-
-        // Header background change on scroll
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
@@ -1259,29 +820,6 @@ ${data.message}
                 header.style.background = 'linear-gradient(135deg, #2c3e50, #34495e)';
                 header.style.backdropFilter = 'none';
             }
-        });
-
-        // Animate elements on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all gallery items and cards
-        document.querySelectorAll('.gallery-item, .package-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
         });
     </script>
 </body>
