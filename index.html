@@ -642,6 +642,7 @@
         <a href="#" onclick="showPage('Portfolio')">Portfolio</a>
         <a href="#" onclick="showPage('Packages')">Packages</a>
         <a href="#" onclick="showPage('Reviews')">Reviews</a>
+        <a href="#" onclick="showPage('ClientDetails')">Client Details</a>
         <a href="#" onclick="showPage('Contact')">Contact</a>
     </div>
 
@@ -653,6 +654,7 @@
     <div id="Portfolio" class="page"></div>
     <div id="Packages"  class="page"></div>
     <div id="Reviews"   class="page"></div>
+    <div id="ClientDetails" class="page"></div>
     <div id="Contact"   class="page"></div>
 
     <footer>
@@ -711,7 +713,7 @@
         }
 
         // Fetch all pages in parallel on load so navigation is instant
-        const pages = ['Home', 'Maternity', 'Adults', 'Kids', 'Pets', 'Portfolio', 'Packages', 'Reviews', 'Contact'];
+        const pages = ['Home', 'Maternity', 'Adults', 'Kids', 'Pets', 'Portfolio', 'Packages', 'Reviews', 'ClientDetails', 'Contact'];
         Promise.all(pages.map(loadPage)).then(() => {
             // After all pages loaded, navigate to hash if present
             const hash = window.location.hash.substring(1);
