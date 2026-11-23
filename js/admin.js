@@ -98,6 +98,7 @@
         renderGallerySelect();
         renderGalleriesList(galleriesCache);
         renderSelectionsList(data.selections || [], galleriesCache);
+        renderInquiriesList(data.inquiries || []);
     }
 
     function renderGallerySelect() {
@@ -117,19 +118,54 @@
             container.innerHTML = '<p style="color: #666;">No galleries yet.</p>';
             return;
         }
-        container.innerHTML = galleries.map(g => `
-            <div class="admin-card">
-                <div>
-                    <strong style="color: #2c3e50; font-size: 1.1rem;">${escapeHtml(g.client_name)} — ${escapeHtml(g.session_title)}</strong>
-                    <div style="color: #666; font-size: 0.9rem; margin-top: 4px;">
-                        ${g.photoCount} photo(s) &bull;
-                        Limit: ${g.max_selections ? g.max_selections : 'Unlimited'} &bull;
-                        Created: ${new Date(g.created_at).toLocaleDateString()}
+        container.innerHTML = galleries.map(g => {
+            const photosHtml = (g.photos || []).map(p => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem;">
+                    <span>${escapeHtml(p.filename)}</span>
+                    <button type="button" class="cg-filter-btn admin-del-photo-btn" data-photo-id="${escapeHtml(p.id)}" style="padding: 4px 10px; font-size: 0.8rem;">Remove</button>
+                </div>
+            `).join('');
+
+            return `
+                <div class="admin-card" style="flex-direction: column; align-items: stretch;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div>
+                            <strong style="color: #2c3e50; font-size: 1.1rem;">${escapeHtml(g.client_name)} — ${escapeHtml(g.session_title)}</strong>
+                            <div style="color: #666; font-size: 0.9rem; margin-top: 4px;">
+                                ${g.photoCount} photo(s) &bull;
+                                Limit: ${g.max_selections ? g.max_selections : 'Unlimited'} &bull;
+                                Created: ${new Date(g.created_at).toLocaleDateString()}
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            ${g.photoCount ? `<button type="button" class="cg-filter-btn admin-toggle-photos" data-id="${escapeHtml(g.id)}">Manage Photos</button>` : ''}
+                            <button type="button" class="cg-secondary-btn admin-del-btn" data-id="${escapeHtml(g.id)}">Delete Gallery</button>
+                        </div>
+                    </div>
+                    <div class="admin-photos-drawer" id="drawer-${escapeHtml(g.id)}" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid #e1e8ed;">
+                        ${photosHtml}
                     </div>
                 </div>
-                <button type="button" class="cg-secondary-btn admin-del-btn" data-id="${escapeHtml(g.id)}">Delete</button>
-            </div>
-        `).join('');
+            `;
+        }).join('');
+
+        container.querySelectorAll('.admin-toggle-photos').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const drawer = document.getElementById(`drawer-${btn.dataset.id}`);
+                if (!drawer) return;
+                const open = drawer.style.display === 'block';
+                drawer.style.display = open ? 'none' : 'block';
+                btn.textContent = open ? 'Manage Photos' : 'Hide Photos';
+            });
+        });
+
+        container.querySelectorAll('.admin-del-photo-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                if (!confirm('Remove this photo from the gallery?')) return;
+                await apiAdmin('DELETE', null, `?photoId=${encodeURIComponent(btn.dataset.photoId)}`);
+                await loadDashboard();
+            });
+        });
 
         container.querySelectorAll('.admin-del-btn').forEach(btn => {
             btn.addEventListener('click', async () => {
@@ -138,6 +174,31 @@
                 await loadDashboard();
             });
         });
+    }
+
+    function renderInquiriesList(inquiries) {
+        const container = document.getElementById('admin-inquiries-list');
+        if (!container) return;
+        if (!inquiries.length) {
+            container.innerHTML = '<p style="color: #666;">No contact inquiries yet.</p>';
+            return;
+        }
+        container.innerHTML = inquiries.map(inq => `
+            <div class="admin-card" style="flex-direction: column; align-items: stretch;">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 0.5rem;">
+                    <div>
+                        <strong style="color: #2c3e50; font-size: 1.05rem;">${escapeHtml(inq.name)} (${escapeHtml(inq.email)})</strong>
+                        <div style="color: #666; font-size: 0.9rem;">
+                            ${inq.phone ? `Phone: ${escapeHtml(inq.phone)} &bull; ` : ''}
+                            Session: ${escapeHtml(inq.session_type || 'Any')} &bull;
+                            Package: ${escapeHtml(inq.package_type || 'Any')} &bull;
+                            ${new Date(inq.created_at).toLocaleString()}
+                        </div>
+                    </div>
+                </div>
+                ${inq.message ? `<p style="color: #2c3e50; background: #f8f9fa; padding: 10px 12px; border-radius: 8px; font-size: 0.95rem;">${escapeHtml(inq.message)}</p>` : ''}
+            </div>
+        `).join('');
     }
 
     function renderSelectionsList(selections, galleries) {

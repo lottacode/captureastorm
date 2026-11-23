@@ -125,6 +125,16 @@ export async function createSignedUploadUrl(storagePath) {
     return { signedUrl: fullUrl, token: data.token, path: storagePath };
 }
 
+export async function deleteStorageFile(storagePath) {
+    assertEnv();
+    if (!storagePath) return;
+    const encodedPath = storagePath.split('/').map(encodeURIComponent).join('/');
+    await fetch(`${SUPABASE_URL}/storage/v1/object/client-proofs/${encodedPath}`, {
+        method: 'DELETE',
+        headers: serviceHeaders(),
+    });
+}
+
 export async function verifyAdminUser(authHeader) {
     assertEnv();
     if (!authHeader || !authHeader.startsWith('Bearer ')) return null;

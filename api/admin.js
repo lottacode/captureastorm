@@ -1,5 +1,6 @@
 import {
     createSignedUploadUrl,
+    deleteStorageFile,
     hashPassword,
     supabaseRest,
     verifyAdminUser,
@@ -13,24 +14,28 @@ export default async function handler(req, res) {
         }
 
         if (req.method === 'GET') {
-            const [galleries, photos, selections] = await Promise.all([
+            const [galleries, photos, selections, inquiries] = await Promise.all([
                 supabaseRest('galleries?order=created_at.desc&select=id,client_name,session_title,max_selections,instructions,created_at'),
-                supabaseRest('gallery_photos?select=id,gallery_id'),
+                supabaseRest('gallery_photos?order=sort_order.asc,created_at.asc&select=id,gallery_id,filename,storage_path,external_url'),
                 supabaseRest('client_selections?order=submitted_at.desc&select=id,gallery_id,client_name,client_email,selected_photos,general_notes,submitted_at'),
+                supabaseRest('contact_inquiries?order=created_at.desc&select=id,name,email,phone,session_type,package_type,message,created_at'),
             ]);
 
-            const photoCounts = {};
+            const photosByGallery = {};
             for (const p of photos || []) {
-                photoCounts[p.gallery_id] = (photoCounts[p.gallery_id] || 0) + 1;
+                if (!photosByGallery[p.gallery_id]) photosByGallery[p.gallery_id] = [];
+                photosByGallery[p.gallery_id].push(p);
             }
 
             return res.status(200).json({
                 user: { email: user.email },
                 galleries: (galleries || []).map(g => ({
                     ...g,
-                    photoCount: photoCounts[g.id] || 0,
+                    photoCount: (photosByGallery[g.id] || []).length,
+                    photos: photosByGallery[g.id] || [],
                 })),
                 selections: selections || [],
+                inquiries: inquiries || [],
             });
         }
 
@@ -90,9 +95,25 @@ export default async function handler(req, res) {
         }
 
         if (req.method === 'DELETE') {
+            const photoId = req.query && req.query.photoId;
+            if (photoId) {
+                const rows = await supabaseRest(`gallery_photos?id=eq.${encodeURIComponent(photoId)}&select=id,storage_path`);
+                if (rows && rows[0] && rows[0].storage_path) {
+                    await deleteStorageFile(rows[0].storage_path);
+                }
+                await supabaseRest(`gallery_photos?id=eq.${encodeURIComponent(photoId)}`, {
+                    method: 'DELETE',
+                });
+                return res.status(200).json({ ok: true });
+            }
+
             const id = req.query && req.query.id;
             if (!id) {
-                return res.status(400).json({ error: 'Gallery id is required.' });
+                return res.status(400).json({ error: 'Gallery id or photoId is required.' });
+            }
+            const photos = await supabaseRest(`gallery_photos?gallery_id=eq.${encodeURIComponent(id)}&select=storage_path`);
+            for (const p of photos || []) {
+                if (p.storage_path) await deleteStorageFile(p.storage_path);
             }
             await supabaseRest(`galleries?id=eq.${encodeURIComponent(id)}`, {
                 method: 'DELETE',

@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Capture A Storm Photography — Maternity, children, pets, and aerial & sports photography. Book your session or access your private client proof gallery.">
+    <meta property="og:title" content="Capture A Storm Photography">
+    <meta property="og:description" content="Capturing life's precious moments — maternity, children, pets, and aerial & sports photography.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://captureastorm.co.uk">
+    <meta property="og:image" content="https://captureastorm.co.uk/logo-transparent-colour.png">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/png" href="logo-transparent-colour.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <title>Capture A Storm Photography</title>
     <style>
         * {
@@ -13,12 +23,16 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
-            color: #99aaf4;
+            color: #2c3e50;
             background-color: #f8f8f8;
             scroll-behavior: smooth;
             /* padding-top: 80px; */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
         }
 
         .container {
@@ -1026,17 +1040,17 @@
 
     <div class="nav-overlay" onclick="closeMenu()"></div>
     <div class="nav-menu">
-        <a href="#" onclick="showPage('Home')">Home</a>
-        <a href="#" onclick="showPage('Maternity')">Maternity</a>
-        <a href="#" onclick="showPage('Adults')">Aerial & Sports</a>
-        <a href="#" onclick="showPage('Kids')">Children</a>
-        <a href="#" onclick="showPage('Pets')">Pets</a>
-        <a href="#" onclick="showPage('Portfolio')">Portfolio</a>
-        <a href="#" onclick="showPage('Packages')">Packages</a>
-        <a href="#" onclick="showPage('Reviews')">Reviews</a>
-        <a href="#" onclick="showPage('ClientDetails')">Client Details</a>
-        <a href="#" onclick="showPage('ClientGallery')">Client Gallery</a>
-        <a href="#" onclick="showPage('Contact')">Contact</a>
+        <a href="#Home" onclick="showPage('Home'); return false;">Home</a>
+        <a href="#Maternity" onclick="showPage('Maternity'); return false;">Maternity</a>
+        <a href="#Adults" onclick="showPage('Adults'); return false;">Aerial &amp; Sports</a>
+        <a href="#Kids" onclick="showPage('Kids'); return false;">Children</a>
+        <a href="#Pets" onclick="showPage('Pets'); return false;">Pets</a>
+        <a href="#Portfolio" onclick="showPage('Portfolio'); return false;">Portfolio</a>
+        <a href="#Packages" onclick="showPage('Packages'); return false;">Packages</a>
+        <a href="#Reviews" onclick="showPage('Reviews'); return false;">Reviews</a>
+        <a href="#ClientDetails" onclick="showPage('ClientDetails'); return false;">Client Details</a>
+        <a href="#ClientGallery" onclick="showPage('ClientGallery'); return false;">Client Gallery</a>
+        <a href="#Contact" onclick="showPage('Contact'); return false;">Contact</a>
     </div>
 
     <div id="Home"      class="page active"></div>
@@ -1098,13 +1112,45 @@
 
             // Attach contact form handler once the form exists in the DOM
             if (pageId === 'Contact') {
-                document.getElementById('contactForm').addEventListener('submit', function(e) {
+                document.getElementById('contactForm').addEventListener('submit', async function(e) {
                     e.preventDefault();
-                    const data = Object.fromEntries(new FormData(this));
-                    const subject = encodeURIComponent(`Photography Inquiry - ${data['session-type'] || 'General'}`);
-                    const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone || 'Not provided'}\nSession Type: ${data['session-type'] || 'Not specified'}\nPackage Type: ${data['package-type'] || 'Not specified'}\n\nMessage:\n${data.message}`);
-                    window.location.href = `mailto:captureastorm@gmail.com?subject=${subject}&body=${body}`;
-                    alert('Thank you for your inquiry! Your email client will open to send the message.');
+                    const form = this;
+                    const data = Object.fromEntries(new FormData(form));
+                    const btn = document.getElementById('contact-submit-btn');
+                    const statusEl = document.getElementById('contact-status');
+
+                    btn.disabled = true;
+                    btn.textContent = 'Sending...';
+                    statusEl.style.display = 'none';
+
+                    try {
+                        const res = await fetch('/api/contact', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                name: data.name,
+                                email: data.email,
+                                phone: data.phone,
+                                sessionType: data['session-type'],
+                                packageType: data['package-type'],
+                                message: data.message,
+                            }),
+                        });
+                        const json = await res.json();
+                        if (!res.ok) throw new Error(json.error || 'Could not send message.');
+
+                        statusEl.textContent = 'Thank you for your inquiry! I have received your message and will reply soon.';
+                        statusEl.className = 'cg-submit-status success';
+                        statusEl.style.display = 'block';
+                        form.reset();
+                    } catch (err) {
+                        statusEl.textContent = err.message || 'Could not send message. Please email captureastorm@gmail.com directly.';
+                        statusEl.className = 'cg-submit-status error';
+                        statusEl.style.display = 'block';
+                    } finally {
+                        btn.disabled = false;
+                        btn.textContent = 'Send Message';
+                    }
                 });
             }
 
@@ -1125,7 +1171,7 @@
             if (hash && document.getElementById(hash)) showPage(hash);
         });
 
-        function showPage(pageId) {
+        function showPage(pageId, options = {}) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             currentPage = pageId;
@@ -1133,6 +1179,10 @@
             window.scrollTo(0, 0);
             window.location.hash = pageId;
             if (pageId === 'Portfolio') loadPortfolioImages();
+            if (pageId === 'Contact' && options.packageType) {
+                const pkgSelect = document.getElementById('package-type');
+                if (pkgSelect) pkgSelect.value = options.packageType;
+            }
         }
 
         async function loadPortfolioImages() {
