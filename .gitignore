@@ -1,0 +1,5 @@
+.env
+.env.local
+.vercel
+clients-config.json
+.DS_Store

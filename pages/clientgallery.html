@@ -1,0 +1,112 @@
+<div class="page-header">
+    <div class="container">
+        <h1>Client Gallery</h1>
+        <p>Enter your gallery password to view your proofs and select photos for editing</p>
+    </div>
+</div>
+
+<section class="cg-section">
+    <div class="container">
+        <!-- Login View -->
+        <div id="cg-login-view" class="contact-form cg-login-card">
+            <h2 style="margin-bottom: 0.75rem; font-size: 1.8rem;">Access Your Photos</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 1.8rem;">
+                Please enter the password provided after your session.
+            </p>
+            <form id="cgLoginForm">
+                <div class="form-group">
+                    <label for="cg-password">Gallery Password</label>
+                    <div class="cg-password-wrap">
+                        <input type="password" id="cg-password" name="password" placeholder="Enter your gallery password" required autocomplete="current-password">
+                        <button type="button" id="cg-toggle-pw" class="cg-toggle-pw" aria-label="Show password">Show</button>
+                    </div>
+                </div>
+                <p id="cg-login-error" class="cg-error" role="alert" style="display: none;"></p>
+                <button type="submit" id="cg-unlock-btn" class="submit-btn" style="width: 100%;">Unlock Gallery</button>
+            </form>
+        </div>
+
+        <!-- Unlocked Gallery View -->
+        <div id="cg-gallery-view" style="display: none;">
+            <div class="cg-session-banner">
+                <div>
+                    <h2 id="cg-session-title" style="text-align: left; margin-bottom: 0.25rem; font-size: 2rem;"></h2>
+                    <p id="cg-client-subtitle" style="color: #666; font-size: 1rem;"></p>
+                </div>
+                <button type="button" id="cg-logout-btn" class="cg-secondary-btn">Lock / Switch Gallery</button>
+            </div>
+
+            <p id="cg-instructions" class="description-text" style="margin-bottom: 2rem;"></p>
+
+            <!-- Sticky Selection Toolbar -->
+            <div class="cg-toolbar" id="cg-toolbar">
+                <div class="cg-counter">
+                    <span id="cg-selected-count">0</span> selected
+                    <span id="cg-max-label"></span>
+                </div>
+                <div class="cg-toolbar-actions">
+                    <button type="button" id="cg-filter-all" class="cg-filter-btn active">All Photos</button>
+                    <button type="button" id="cg-filter-selected" class="cg-filter-btn">Selected Only</button>
+                    <button type="button" id="cg-open-submit" class="submit-btn cg-submit-trigger" disabled>
+                        Review &amp; Submit
+                    </button>
+                </div>
+            </div>
+
+            <!-- Proof Grid -->
+            <div id="cg-grid" class="cg-grid"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Client Gallery Lightbox Modal -->
+<div id="cgLightbox" class="modal cg-lightbox">
+    <span class="close" id="cg-lb-close">&times;</span>
+    <button type="button" class="cg-lb-nav cg-lb-prev" id="cg-lb-prev" aria-label="Previous photo">&#10094;</button>
+    <button type="button" class="cg-lb-nav cg-lb-next" id="cg-lb-next" aria-label="Next photo">&#10095;</button>
+    <div class="cg-lb-content">
+        <div class="cg-lb-img-wrap" oncontextmenu="return false;">
+            <img id="cg-lb-img" src="" alt="" draggable="false">
+            <div class="cg-watermark">PROOF &bull; Capture A Storm</div>
+        </div>
+        <div class="cg-lb-bar">
+            <span id="cg-lb-filename" class="cg-lb-filename"></span>
+            <button type="button" id="cg-lb-select-btn" class="cg-select-btn">Select Photo</button>
+        </div>
+    </div>
+</div>
+
+<!-- Review & Submit Selection Modal -->
+<div id="cgSubmitModal" class="modal cg-submit-modal">
+    <div class="cg-submit-dialog">
+        <span class="close cg-dialog-close" id="cg-submit-close">&times;</span>
+        <h2 style="margin-bottom: 0.5rem; font-size: 1.8rem;">Submit Your Choices</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 1.5rem;">
+            Review your selected photos below and send your list for editing.
+        </p>
+
+        <div id="cg-review-list" class="cg-review-list"></div>
+
+        <form id="cgSubmitForm">
+            <div class="form-group">
+                <label for="cg-submit-name">Your Name</label>
+                <input type="text" id="cg-submit-name" required>
+            </div>
+            <div class="form-group">
+                <label for="cg-submit-email">Your Email (so I can send your finished edits)</label>
+                <input type="email" id="cg-submit-email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="cg-submit-notes">General Edit Notes (optional)</label>
+                <textarea id="cg-submit-notes" rows="3" placeholder="e.g., Prefer natural skin tones, or any special requests..."></textarea>
+            </div>
+
+            <div id="cg-submit-status" class="cg-submit-status" style="display: none;"></div>
+
+            <div class="cg-submit-buttons">
+                <button type="submit" id="cg-send-btn" class="submit-btn" style="flex: 1;">Send Selection</button>
+                <button type="button" id="cg-copy-btn" class="cg-secondary-btn">Copy List</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="page-header">
+    <div class="container">
+        <h1>Photographer Admin</h1>
+        <p>Manage client proof galleries, upload photos, and review client edit selections</p>
+    </div>
+</div>
+
+<section class="cg-section">
+    <div class="container">
+        <!-- Admin Login -->
+        <div id="admin-login-view" class="contact-form cg-login-card">
+            <h2 style="margin-bottom: 0.75rem; font-size: 1.8rem;">Admin Sign In</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 1.5rem;">
+                Sign in with your Supabase Auth account.
+            </p>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="admin-email">Email</label>
+                    <input type="email" id="admin-email" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" required autocomplete="current-password">
+                </div>
+                <p id="admin-login-error" class="cg-error" style="display: none;"></p>
+                <button type="submit" id="admin-login-btn" class="submit-btn" style="width: 100%;">Sign In</button>
+            </form>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="admin-dashboard-view" style="display: none;">
+            <div class="cg-session-banner">
+                <div>
+                    <h2 style="text-align: left; margin-bottom: 0.25rem; font-size: 2rem;">Gallery Manager</h2>
+                    <p id="admin-user-label" style="color: #666;"></p>
+                </div>
+                <button type="button" id="admin-logout-btn" class="cg-secondary-btn">Sign Out</button>
+            </div>
+
+            <div class="admin-grid">
+                <!-- Create Gallery Form -->
+                <div class="contact-form" style="margin: 0; max-width: none;">
+                    <h3 style="color: #2c3e50; margin-bottom: 1rem;">Create Client Gallery</h3>
+                    <form id="adminCreateForm">
+                        <div class="form-group">
+                            <label for="ag-client-name">Client Name</label>
+                            <input type="text" id="ag-client-name" placeholder="e.g. Sarah & Tom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ag-session-title">Session Title</label>
+                            <input type="text" id="ag-session-title" placeholder="e.g. Autumn Family Shoot" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ag-password">Client Password</label>
+                            <input type="text" id="ag-password" placeholder="e.g. autumn-sarah-2026" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ag-max">Max Included Selections (optional)</label>
+                            <input type="number" id="ag-max" min="1" placeholder="Leave blank for unlimited">
+                        </div>
+                        <div class="form-group">
+                            <label for="ag-instructions">Instructions for Client</label>
+                            <textarea id="ag-instructions" rows="2" placeholder="Select the photos you would like edited..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" style="width: 100%;">Create Gallery</button>
+                    </form>
+                </div>
+
+                <!-- Upload Photos Form -->
+                <div class="contact-form" style="margin: 0; max-width: none;">
+                    <h3 style="color: #2c3e50; margin-bottom: 1rem;">Upload Proof Photos</h3>
+                    <form id="adminUploadForm">
+                        <div class="form-group">
+                            <label for="au-gallery-select">Target Gallery</label>
+                            <select id="au-gallery-select" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="au-files">Select Proof Images (JPG / PNG / WebP)</label>
+                            <input type="file" id="au-files" accept="image/*" multiple required>
+                        </div>
+                        <p id="au-status" style="color: #2c3e50; font-weight: 600; margin-bottom: 1rem;"></p>
+                        <button type="submit" id="au-upload-btn" class="submit-btn" style="width: 100%;">Upload to Gallery</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Existing Galleries -->
+            <div style="margin-top: 3rem;">
+                <h3 style="color: #2c3e50; margin-bottom: 1rem; font-size: 1.5rem;">Client Galleries</h3>
+                <div id="admin-galleries-list" class="admin-list"></div>
+            </div>
+
+            <!-- Submitted Selections -->
+            <div style="margin-top: 3rem;">
+                <h3 style="color: #2c3e50; margin-bottom: 1rem; font-size: 1.5rem;">Submitted Client Selections</h3>
+                <div id="admin-selections-list" class="admin-list"></div>
+            </div>
+        </div>
+    </div>
+</section>
