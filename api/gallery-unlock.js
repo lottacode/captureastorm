@@ -2,6 +2,7 @@ import {
     hashPassword,
     signGalleryToken,
     supabaseRest,
+    supabaseRestAll,
 } from './_lib/supabase.js';
 import { createR2SignedReadUrls } from './_lib/r2.js';
 
@@ -26,7 +27,7 @@ export default async function handler(req, res) {
         }
 
         const gallery = rows[0];
-        const photos = await supabaseRest(
+        const photos = await supabaseRestAll(
             `gallery_photos?gallery_id=eq.${gallery.id}&order=sort_order.asc,created_at.asc&select=id,filename,storage_path,external_url`
         );
 

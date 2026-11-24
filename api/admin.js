@@ -1,6 +1,7 @@
 import {
     hashPassword,
     supabaseRest,
+    supabaseRestAll,
     verifyAdminUser,
 } from './_lib/supabase.js';
 import {
@@ -17,10 +18,10 @@ export default async function handler(req, res) {
 
         if (req.method === 'GET') {
             const [galleries, photos, selections, inquiries] = await Promise.all([
-                supabaseRest('galleries?order=created_at.desc&select=id,client_name,session_title,max_selections,instructions,created_at'),
-                supabaseRest('gallery_photos?order=sort_order.asc,created_at.asc&select=id,gallery_id,filename,storage_path,external_url'),
-                supabaseRest('client_selections?order=submitted_at.desc&select=id,gallery_id,client_name,client_email,selected_photos,general_notes,submitted_at'),
-                supabaseRest('contact_inquiries?order=created_at.desc&select=id,name,email,phone,session_type,package_type,message,created_at'),
+                supabaseRestAll('galleries?order=created_at.desc&select=id,client_name,session_title,max_selections,instructions,created_at'),
+                supabaseRestAll('gallery_photos?order=sort_order.asc,created_at.asc&select=id,gallery_id,filename,storage_path,external_url'),
+                supabaseRestAll('client_selections?order=submitted_at.desc&select=id,gallery_id,client_name,client_email,selected_photos,general_notes,submitted_at'),
+                supabaseRestAll('contact_inquiries?order=created_at.desc&select=id,name,email,phone,session_type,package_type,message,created_at'),
             ]);
 
             const photosByGallery = {};
@@ -113,7 +114,7 @@ export default async function handler(req, res) {
             if (!id) {
                 return res.status(400).json({ error: 'Gallery id or photoId is required.' });
             }
-            const photos = await supabaseRest(`gallery_photos?gallery_id=eq.${encodeURIComponent(id)}&select=storage_path`);
+            const photos = await supabaseRestAll(`gallery_photos?gallery_id=eq.${encodeURIComponent(id)}&select=storage_path`);
             for (const p of photos || []) {
                 if (p.storage_path) await deleteR2Object(p.storage_path);
             }

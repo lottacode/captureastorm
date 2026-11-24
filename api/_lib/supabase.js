@@ -84,6 +84,22 @@ export async function supabaseRest(path, { method = 'GET', body, headers = {} } 
     return json;
 }
 
+export async function supabaseRestAll(path) {
+    const pageSize = 1000;
+    const all = [];
+    let offset = 0;
+    const sep = path.includes('?') ? '&' : '?';
+
+    while (true) {
+        const page = await supabaseRest(`${path}${sep}limit=${pageSize}&offset=${offset}`);
+        if (!Array.isArray(page) || page.length === 0) break;
+        all.push(...page);
+        if (page.length < pageSize) break;
+        offset += pageSize;
+    }
+    return all;
+}
+
 export async function createSignedReadUrls(storagePaths, expiresIn = 7200) {
     assertEnv();
     if (!storagePaths.length) return {};
