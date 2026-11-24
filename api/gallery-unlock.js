@@ -1,9 +1,9 @@
 import {
-    createSignedReadUrls,
     hashPassword,
     signGalleryToken,
     supabaseRest,
 } from './_lib/supabase.js';
+import { createR2SignedReadUrls } from './_lib/r2.js';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
         const storagePaths = (photos || [])
             .map(p => p.storage_path)
             .filter(Boolean);
-        const signedMap = await createSignedReadUrls(storagePaths, 7200);
+        const signedMap = await createR2SignedReadUrls(storagePaths, 7200);
 
         const images = (photos || []).map(p => ({
             id: p.id,

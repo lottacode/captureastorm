@@ -278,15 +278,17 @@
                 const file = files[i];
                 statusEl.textContent = `Uploading ${i + 1} of ${files.length}: ${file.name}...`;
 
+                const contentType = file.type || 'image/jpeg';
                 const { signedUrl, path } = await apiAdmin('POST', {
                     action: 'sign_upload',
                     galleryId,
                     filename: file.name,
+                    contentType,
                 });
 
                 const putRes = await fetch(signedUrl, {
                     method: 'PUT',
-                    headers: { 'Content-Type': file.type || 'image/jpeg' },
+                    headers: { 'Content-Type': contentType },
                     body: file,
                 });
                 if (!putRes.ok) {

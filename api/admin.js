@@ -1,10 +1,12 @@
 import {
-    createSignedUploadUrl,
-    deleteStorageFile,
     hashPassword,
     supabaseRest,
     verifyAdminUser,
 } from './_lib/supabase.js';
+import {
+    createR2SignedUploadUrl,
+    deleteR2Object,
+} from './_lib/r2.js';
 
 export default async function handler(req, res) {
     try {
@@ -62,13 +64,13 @@ export default async function handler(req, res) {
             }
 
             if (body.action === 'sign_upload') {
-                const { galleryId, filename } = body;
+                const { galleryId, filename, contentType } = body;
                 if (!galleryId || !filename) {
                     return res.status(400).json({ error: 'galleryId and filename are required.' });
                 }
                 const safeName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
                 const storagePath = `${galleryId}/${Date.now()}_${safeName}`;
-                const upload = await createSignedUploadUrl(storagePath);
+                const upload = await createR2SignedUploadUrl(storagePath, contentType || 'image/jpeg');
                 return res.status(200).json(upload);
             }
 
@@ -99,7 +101,7 @@ export default async function handler(req, res) {
             if (photoId) {
                 const rows = await supabaseRest(`gallery_photos?id=eq.${encodeURIComponent(photoId)}&select=id,storage_path`);
                 if (rows && rows[0] && rows[0].storage_path) {
-                    await deleteStorageFile(rows[0].storage_path);
+                    await deleteR2Object(rows[0].storage_path);
                 }
                 await supabaseRest(`gallery_photos?id=eq.${encodeURIComponent(photoId)}`, {
                     method: 'DELETE',
@@ -113,7 +115,7 @@ export default async function handler(req, res) {
             }
             const photos = await supabaseRest(`gallery_photos?gallery_id=eq.${encodeURIComponent(id)}&select=storage_path`);
             for (const p of photos || []) {
-                if (p.storage_path) await deleteStorageFile(p.storage_path);
+                if (p.storage_path) await deleteR2Object(p.storage_path);
             }
             await supabaseRest(`galleries?id=eq.${encodeURIComponent(id)}`, {
                 method: 'DELETE',
